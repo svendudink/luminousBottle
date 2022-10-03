@@ -2,9 +2,9 @@ import React from "react";
 import "./Popup.css";
 import { useContext, useReducer, useState, useEffect } from "react";
 import { GlobalContext } from "./context/GlobalContext";
-import QrScanner from "./QrScanner.js";
+// import QrScanner from "./QrScanner.js";
 import { ReactDOM } from "react";
-import { QrReader } from "react-qr-reader";
+// import { QrReader } from "react-qr-reader";
 import Storys from "../media/background/Storys/Storys";
 
 function TextBubble(props) {
