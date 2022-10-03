@@ -1,0 +1,88 @@
+.startPagewhitea {
+  text-align: center;
+  background-image: url("../media/background/IMG_7184.JPG");
+  background-size: cover;
+
+  transition: 0.9s ease;
+}
+
+.lamp1a {
+  text-align: center;
+  background-image: url("../media/background/IMG_7185.JPG");
+  background-size: cover;
+  transition: 0.8s ease;
+}
+
+.lamp2a {
+  text-align: center;
+  background-image: url("../media/background/IMG_7188.JPG");
+  background-size: cover;
+  transition: 0.8s ease;
+}
+.lamp2b {
+  text-align: center;
+  background-image: url("../media/background/IMG_7189.JPG");
+  background-size: cover;
+  transition: 0.8s ease;
+}
+.lamp2c {
+  text-align: center;
+  background-image: url("../media/background/IMG_7190.JPG");
+  background-size: cover;
+  transition: 0.8s ease;
+}
+.lamp2d {
+  text-align: center;
+  background-image: url("../media/background/IMG_7191.JPG");
+  background-size: cover;
+  transition: 0.8s ease;
+}
+
+.lamp3a {
+  text-align: center;
+  background-image: url("../media/background/IMG_7192.JPG");
+  background-size: cover;
+  transition: 0.8s ease;
+}
+
+.lamp3b {
+  text-align: center;
+  background-image: url("../media/background/IMG_7193.JPG");
+  background-size: cover;
+  transition: 0.8s ease;
+}
+
+.lamp3c {
+  text-align: center;
+  background-image: url("../media/background/IMG_7194.JPG");
+  background-size: cover;
+  transition: 0.8s ease;
+}
+
+.lamp3d {
+  text-align: center;
+  background-image: url("../media/background/IMG_7195.JPG");
+  background-size: cover;
+  transition: 0.8s ease;
+}
+
+.lamp4a {
+  text-align: center;
+  background-image: url("../media/background/IMG_7187.JPG");
+  background-size: cover;
+  transition: 0.8s ease;
+}
+
+.lamp4b {
+  text-align: center;
+  background-image: url("../media/background/IMG_7179.JPG");
+  background-size: cover;
+  transition: 0.8s ease;
+}
+
+/* .startPage:hover {
+  text-align: center;
+  background-image: url("../media/background/IMG_7178.JPG");
+  background-size: cover;
+  transition: 0.5s ease;
+} */

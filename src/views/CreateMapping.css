@@ -1,0 +1,57 @@
+.headgrid {
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
+  grid-template-rows: 50%;
+}
+.iconMenu {
+  position: "absolute";
+  grid-column-start: 1;
+  padding-left: 30px;
+}
+
+.addLamp {
+  grid-column-start: 2;
+  display: flex;
+  justify-content: baseline;
+}
+
+.mapOps {
+  grid-column-start: 3;
+  box-sizing: content-box;
+  width: 50%;
+  height: 200px;
+  border: 2px solid rgb(99, 120, 196);
+
+  border-radius: 10px;
+  float: left;
+}
+
+.main {
+  display: grid;
+}
+
+.map {
+  grid-column-start: 1;
+  padding-left: 3%;
+  padding-top: 4%;
+}
+.enhancedTable {
+  grid-column-start: 2;
+  padding-top: 4%;
+  padding-right: 10%;
+  display: flex;
+  justify-content: center;
+}
+
+/* Toolbar */
+
+.head {
+  display: grid;
+  grid-template-columns: 33% 33% 33%;
+  height: 50px;
+}
+
+.text {
+  display: flex;
+  position: sticky;
+}

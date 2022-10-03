@@ -1,0 +1,12 @@
+.home {
+  text-align: center;
+  background-image: linear-gradient(
+      rgba(255, 255, 255, 0.95),
+      rgba(255, 255, 255, 0.8)
+    ),
+    url("./media/background/IMG_7159.JPG");
+
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
+}
