@@ -2,7 +2,7 @@ import GoogleMap from "../components/Map";
 import { useReducer, useContext, useEffect } from "react";
 import { GlobalContext } from "../components/context/GlobalContext";
 import { TextField } from "@mui/material";
-import Popup from "../components/Popup";
+//import Popup from "../components/Popup";
 import EnhancedTable from "../components/EnhancedTable";
 import "./CreateMapping.css";
 import Button from "@mui/material/Button";
@@ -204,7 +204,7 @@ const CreateMapping = () => {
           <EnhancedTable />
         </div>
       </div>
-      <Popup trigger={buttonPopup} />
+      {/* <Popup trigger={buttonPopup} /> */}
     </div>
   );
 };

@@ -12,10 +12,8 @@ import ContentCut from "@mui/icons-material/ContentCut";
 import ContentCopy from "@mui/icons-material/ContentCopy";
 import ContentPaste from "@mui/icons-material/ContentPaste";
 import Cloud from "@mui/icons-material/Cloud";
-import Dropdown from "react-bootstrap/Dropdown";
-import DropdownButton from "react-bootstrap/DropdownButton";
+
 import { GlobalContext } from "./context/GlobalContext";
-import QrScanner from "./QrScanner";
 
 export default function IconMenu(props) {
   const {
