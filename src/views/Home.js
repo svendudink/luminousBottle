@@ -1,8 +1,8 @@
 import { GlobalContext } from "../components/context/GlobalContext";
-import { useContext, useState, useEffect, useRef } from "react";
+import { useContext, useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import "./Home.css";
-import { ReactDOM } from "react";
+
 import TextBubble from "../components/TextBubble";
 
 // Load images
@@ -49,34 +49,24 @@ const Home = () => {
   }
 
   const {
-    map,
-    setMap,
-    setActiveMap,
-    setPageLocation,
-    pageLocation,
     infoVisibility,
     setInfoVisibility,
-    lampBackGround,
     setLampBackground,
-    activePage,
     setActivePage,
   } = useContext(GlobalContext);
 
-  useEffect(() => {
-    setActivePage("home");
-  }, []);
-
-  const [resWidth, setResWidth] = useState();
-  const [resHeight, setResHeight] = useState();
-
   const [text, setText] = useState("butter");
   const [coord, setCoords] = useState({ x: "0", y: "0" });
-  const [mouseEntered, setMouseEntered] = useState(false);
+  const [assetsLoaded, setAssetsLoaded] = useState(false);
 
-  window.addEventListener("resize", () => {
-    setResWidth(window.innerWidth + "px");
-    setResHeight(window.innerHeight + "px");
-  });
+  /////////////////////////////////////Sven's//Coding/ Date: 17-10-2022 16:11 ////////////
+  // initial loading of values and background
+  /////////////////////////////////////////gnidoC//s'nevS////////////////////////////////
+
+  useEffect(() => {
+    setActivePage("home");
+    document.title = "Bottle Luminous: Home";
+  }, []);
 
   useEffect(() => {
     const arr = [
@@ -99,6 +89,10 @@ const Home = () => {
     }, 3200);
   }, []);
 
+  /////////////////////////////////////Sven's//Coding/ Date: 17-10-2022 16:12 ////////////
+  // deal with background changes when scrolling over background
+  /////////////////////////////////////////gnidoC//s'nevS////////////////////////////////
+
   const backGround = (name, images, e) => {
     infoWindowHandler(name, images, e);
     let number = Math.floor(Math.random() * images);
@@ -111,14 +105,11 @@ const Home = () => {
   const infoWindowHandler = (name, images, e) => {
     if (name === "startPagewhite") {
       setInfoVisibility("hidden");
-      setMouseEntered(false);
     } else if (e !== "none") {
       setInfoVisibility("visible");
-      setMouseEntered(true);
 
       let temp = e.target.attributes.cy.nodeValue.slice(0, -1);
       temp = Number(temp) - 12;
-      console.log(temp + "%");
 
       setCoords({
         x: e.target.attributes.cx.nodeValue,
@@ -128,7 +119,9 @@ const Home = () => {
     }
   };
 
-  const [assetsLoaded, setAssetsLoaded] = useState(false);
+  /////////////////////////////////////Sven's//Coding/ Date: 17-10-2022 16:13 ////////////
+  // Preloading of images
+  /////////////////////////////////////////gnidoC//s'nevS////////////////////////////////
 
   useEffect(() => {
     let isCancelled = false;

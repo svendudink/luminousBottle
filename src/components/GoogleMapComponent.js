@@ -9,6 +9,7 @@ import { Map, GoogleApiWrapper, Marker } from "google-maps-react";
 import IconMenu from "./IconMenu";
 import { TextField } from "@mui/material";
 import { GlobalContext } from "./context/GlobalContext";
+import "./GoogleMapComponent.css";
 
 import Popup from "./Popup";
 
@@ -61,6 +62,8 @@ const GoogleMapComponent = (props) => {
   /////////////////////////////////////////gnidoC//s'nevS////////////////////////////////
 
   let addNewLampHandler = () => {
+    console.log("viewTrigger");
+
     const lat = center.lat;
     const lng = center.lng;
     const ind = markers.length === 0 ? 1 : markers.length;
@@ -134,9 +137,8 @@ const GoogleMapComponent = (props) => {
     setTextValue(input.target.value);
   };
 
-  let clickstat = (e, map, coord) => {
+  let markerDragEnd = (e, map, coord) => {
     setCenter({ lat: map.center.lat(), lng: map.center.lng() });
-
     setEventcoords({ lat: map.center.lat(), lng: map.center.lng() });
   };
 
@@ -216,10 +218,10 @@ const GoogleMapComponent = (props) => {
             <button onClick={() => createNewMap()}>Add new map</button>
           </h1>
           <Map
-            onDragend={(e, map, coord) => clickstat(e, map, coord)}
+            onDragend={(e, map, coord) => markerDragEnd(e, map, coord)}
             google={props.google}
             zoom={18}
-            onClick={clickstat}
+            onClick={markerDragEnd}
             style={mapStyles}
             center={{
               lat: eventcoords.lat,

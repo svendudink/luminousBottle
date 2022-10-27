@@ -2,12 +2,11 @@ import GoogleMap from "../components/Map";
 import { useReducer, useContext, useEffect } from "react";
 import { GlobalContext } from "../components/context/GlobalContext";
 import { TextField } from "@mui/material";
-//import Popup from "../components/Popup";
+import Popup from "../components/Popup";
 import EnhancedTable from "../components/EnhancedTable";
 import "./CreateMapping.css";
 import Button from "@mui/material/Button";
 import IconMenu from "../components/IconMenu";
-import { useLocation } from "react-router-dom";
 
 const Toolbar = () => {
   return <div className="head"></div>;
@@ -16,35 +15,36 @@ const Toolbar = () => {
 const CreateMapping = () => {
   const {
     bulbIdList,
-
     activeMap,
     setActiveMap,
     filteredEventList,
     setFilteredEventList,
     center,
-
     markers,
     setMarkers,
     GraphQLHandler,
     currentLampId,
-
+    setCurrentLampId,
     textValue,
     setTextValue,
-
     buttonPopup,
     bulbConfiguratorVisibility,
     setBulbConfiguratorVisibility,
     map,
     setMap,
-
+    setCenter,
     setCenterOption,
     setZoom,
-    centerOption,
     setActivePage,
   } = useContext(GlobalContext);
 
+  /////////////////////////////////////Sven's//Coding/ Date: 17-10-2022 15:40 ////////////
+  // Initial loading of values
+  /////////////////////////////////////////gnidoC//s'nevS////////////////////////////////
+
   useEffect(() => {
     setActivePage("createMapping");
+    document.title = "Bottle Luminous: Create event map";
   });
 
   useEffect(() => {
@@ -55,7 +55,18 @@ const CreateMapping = () => {
     }
   }, []);
 
+  let firstLoad = (e) => {
+    GraphQLHandler(0, center.lat, center.lng, "firstLoad", textValue);
+  };
+  if (bulbIdList === "") {
+    firstLoad();
+  }
+
   const [, forceRerender] = useReducer((x) => x + 1, 0);
+
+  /////////////////////////////////////Sven's//Coding/ Date: 17-10-2022 15:48 ////////////  
+   // Dropdown menu 
+   /////////////////////////////////////////gnidoC//s'nevS////////////////////////////////
 
   const Dropdown = ({ label, value, options, onChange }) => {
     return (
@@ -73,18 +84,10 @@ const CreateMapping = () => {
     );
   };
 
-  let firstLoad = (e) => {
-    GraphQLHandler(0, center.lat, center.lng, "firstLoad", textValue);
-  };
-  if (bulbIdList === "") {
-    firstLoad();
-  }
-
   const dropdownHandleChange = async (event) => {
     setBulbConfiguratorVisibility("hidden");
-
+    setCurrentLampId(0);
     setCenterOption("firstMarker");
-
     setMarkers([]);
     setZoom(17);
 
@@ -96,26 +99,62 @@ const CreateMapping = () => {
     }
   };
 
+
+  /////////////////////////////////////Sven's//Coding/ Date: 17-10-2022 16:09 ////////////  
+   // Sending the map action buttons to backend over GraphQL 
+   /////////////////////////////////////////gnidoC//s'nevS////////////////////////////////
+
+
+
+
+  const actionHandler = async (action) => {
+    console.log(currentLampId);
+    let findMiddle = false;
+
+    if (action === "deleteActive" && markers.length <= currentLampId) {
+      console.log("checked");
+      setCurrentLampId(currentLampId - 1)
+      if (currentLampId === 1) {
+        setBulbConfiguratorVisibility("hidden");
+      }
+    }
+
+    if (markers.length > 1 && currentLampId !== 1 && currentLampId !== 0) {
+      findMiddle = markers.filter((el) => {
+        return (
+          el.id === currentLampId.toString() ||
+          el.id === (currentLampId - 1).toString()
+        );
+      });
+    }
+
+    await GraphQLHandler(
+      currentLampId,
+      findMiddle
+        ? (Number(findMiddle[0].lat) + Number(findMiddle[1].lat)) / 2
+        : map.center.lat(),
+      findMiddle
+        ? (Number(findMiddle[0].lng) + Number(findMiddle[1].lng)) / 2
+        : map.center.lng(),
+      action,
+      activeMap
+    );
+  };
+
   let addNewLampHandler = async () => {
+    
     setCenterOption("mapCenter");
+    setCenter({
+      lat: map.center.lat(),
+      lng: map.center.lng(),
+    });
 
     const lat = map.center.lat();
     const lng = map.center.lng();
-    const ind = markers.length === 0 ? 1 : markers.length;
-    const newId =
-      markers.length === 0 ? 1 : Number(markers[markers.length - 1].id) + 1;
-    console.log(newId);
+    const newId = markers.length === 0 ? 1 : Number(markers.length + 1);
 
-    let err = markers.filter((e) => {
-      return e.id === ind;
-    });
-
-    await GraphQLHandler(newId, lat, lng, "addLamp", activeMap);
-    //setCenter({ lat: map.center.lat(), lng: map.center.lng() });
-
+    await GraphQLHandler(newId, lat, lng, "addLamp", activeMap, "none", 100);
     markers[markers.length] = { id: newId, lat, lng };
-
-    //forceRerender();
   };
 
   let inputText = (input) => {
@@ -156,7 +195,10 @@ const CreateMapping = () => {
           <Button
             size="large"
             variant="outlined"
-            disabled={activeMap === "(Select)" ? true : false}
+            disabled={
+              activeMap === "(Select)" ||
+              Object.keys(bulbIdList).length <= markers.length
+            }
             onClick={() => addNewLampHandler()}
             style={{
               maxWidth: "300px",
@@ -165,14 +207,87 @@ const CreateMapping = () => {
               minHeight: "30px",
             }}
           >
-            add new lamp
+            {Object.keys(bulbIdList).length <= markers.length
+              ? "MAX BULBS REACHED"
+              : "add new lamp"}
+          </Button>
+          <Button
+            size="large"
+            variant="outlined"
+            disabled={
+              currentLampId === 0
+                ? true
+                : false ||
+                  bulbIdList.length < currentLampId ||
+                  Object.keys(bulbIdList).length <= markers.length
+            }
+            onClick={() => actionHandler("addLampBeforeActive")}
+            style={{
+              maxWidth: "300px",
+              maxHeight: "300px",
+              minWidth: "30px",
+              minHeight: "30px",
+              marginLeft: "20px",
+              marginRight: "20px",
+            }}
+          >
+            {Object.keys(bulbIdList).length <= markers.length
+              ? "MAX BULBS REACHED"
+              : " Add before selected Lamp"}
+          </Button>
+          <Button
+            size="large"
+            variant="outlined"
+            disabled={currentLampId === 0 ? true : false}
+            onClick={() => actionHandler("deleteActive")}
+            style={{
+              maxWidth: "300px",
+              maxHeight: "300px",
+              minWidth: "30px",
+              minHeight: "30px",
+              marginLeft: "20px",
+              marginRight: "20px",
+            }}
+          >
+            Delete Selected Lamp
+          </Button>
+
+          <Button
+            size="large"
+            variant="outlined"
+            disabled={activeMap === "(Select)" || markers.length < 2}
+            onClick={() => actionHandler("verticalScan")}
+            style={{
+              maxWidth: "300px",
+              maxHeight: "300px",
+              minWidth: "30px",
+              minHeight: "30px",
+              marginLeft: "20px",
+            }}
+          >
+            Vertical Scan
+          </Button>
+          <Button
+            size="large"
+            variant="outlined"
+            disabled={activeMap === "(Select)" || markers.length < 2}
+            onClick={() => actionHandler("horizontalScan")}
+            style={{
+              maxWidth: "300px",
+              maxHeight: "300px",
+              minWidth: "30px",
+              minHeight: "30px",
+              marginLeft: "20px",
+              marginRight: "20px",
+            }}
+          >
+            Horizontal Scan
           </Button>
         </div>
         <div className="mapOps">
           <div>Map Manager:</div>
 
           {/* <TextField value={textValue} onChange={inputText}></TextField> */}
-
           <TextField
             id="outlined-helperText"
             label="New map name:"
@@ -204,7 +319,7 @@ const CreateMapping = () => {
           <EnhancedTable />
         </div>
       </div>
-      {/* <Popup trigger={buttonPopup} /> */}
+      <Popup trigger={buttonPopup} />
     </div>
   );
 };

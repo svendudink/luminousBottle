@@ -1,18 +1,12 @@
 import React from "react";
 import "./Popup.css";
-import { useContext, useReducer, useState, useEffect } from "react";
+import { useContext, useState } from "react";
 import { GlobalContext } from "./context/GlobalContext";
-// import QrScanner from "./QrScanner.js";
-import { ReactDOM } from "react";
-// import { QrReader } from "react-qr-reader";
 import Storys from "../media/background/Storys/Storys";
 
 function TextBubble(props) {
-  const { infoVisibility, setInfoVisibility, setLampBackground } =
-    useContext(GlobalContext);
+  const { infoVisibility } = useContext(GlobalContext);
   const [localInfoVisibility, setLocalInfoVisibility] = useState("hidden");
-
-  console.log(infoVisibility);
 
   return (
     <div

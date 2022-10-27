@@ -1,3 +1,7 @@
+/////////////////////////////////////Sven's//Coding/ Date: 17-10-2022 15:28 ////////////
+// i used a seperate view in between App.js and the routes to make the background dynamic
+/////////////////////////////////////////gnidoC//s'nevS////////////////////////////////
+
 import {
   Router,
   Route,
@@ -14,8 +18,11 @@ import Home from "./views/Home";
 import About from "./views/about";
 import { GlobalContext } from "./components/context/GlobalContext";
 import { Showroom } from "./views/Showroom";
+import { IoContextProvider } from "./components/context/IoConnectContext";
 
-// Load images
+/////////////////////////////////////Sven's//Coding/ Date: 17-10-2022 15:27 ////////////
+// Load images for showroom carousel
+/////////////////////////////////////////gnidoC//s'nevS////////////////////////////////
 import startPagewhitea from "./media/background/IMG_7184.JPG";
 import lamp1a from "./media/background/IMG_7185.JPG";
 import lamp2a from "./media/background/IMG_7188.JPG";
@@ -33,9 +40,8 @@ import otherPages from "./media/background/IMG_7179.JPG";
 function BackgroundLayer() {
   const [assetsLoaded, setAssetsLoaded] = useState(false);
   const [background, setBackground] = useState(12);
-  const [opacity, setOpacity] = useState(true);
 
-  const { lampBackGround, setLampBackground, activePage, setActivePage } =
+  const { lampBackGround, setLampBackground, activePage } =
     useContext(GlobalContext);
 
   const preloadSrcList = [
@@ -70,12 +76,14 @@ function BackgroundLayer() {
     "otherPages",
   ];
 
-  //setBackground(preloadSrcListString.indexOf(lampBackGround));
-
   useEffect(() => {
     setBackground(preloadSrcListString.indexOf(lampBackGround));
   }, [lampBackGround]);
-  console.log(lampBackGround);
+
+  /////////////////////////////////////Sven's//Coding/ Date: 17-10-2022 15:30 ////////////
+  // Pre loading of background for a smooth image experience when scrolling over
+  // background
+  /////////////////////////////////////////gnidoC//s'nevS////////////////////////////////
 
   function preloadImage(src) {
     return new Promise((resolve, reject) => {
@@ -148,7 +156,16 @@ function BackgroundLayer() {
         <Routes>
           <Route path={"/"} element={<Home />} />
           <Route path={"/Home"} element={<Home />} />
-          <Route path="/BasicController" element={<BasicController />} />
+
+          <Route
+            path="/BasicController"
+            element={
+              <IoContextProvider>
+                <BasicController />
+              </IoContextProvider>
+            }
+          />
+
           <Route path="/CreateMapping" element={<CreateMapping />} />
           <Route path="/About" element={<About />} />
           <Route path="/Showroom" element={<Showroom />} />

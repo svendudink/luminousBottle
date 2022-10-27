@@ -1,17 +1,12 @@
 import * as React from "react";
-import { useEffect, useReducer } from "react";
+import { useEffect, useReducer, useState } from "react";
 import Divider from "@mui/material/Divider";
 import Paper from "@mui/material/Paper";
 import MenuList from "@mui/material/MenuList";
 import MenuItem from "@mui/material/MenuItem";
 import ListItemText from "@mui/material/ListItemText";
-import ListItemIcon from "@mui/material/ListItemIcon";
 import Typography from "@mui/material/Typography";
-import ContentCut from "@mui/icons-material/ContentCut";
-
-import ContentCopy from "@mui/icons-material/ContentCopy";
-import ContentPaste from "@mui/icons-material/ContentPaste";
-import Cloud from "@mui/icons-material/Cloud";
+import { Slider } from "@mui/material";
 
 import { GlobalContext } from "./context/GlobalContext";
 
@@ -21,15 +16,14 @@ export default function IconMenu(props) {
     GraphQLHandler,
     activeMap,
     markers,
-    currentBulbId,
     setCurrentBulbId,
     value,
     setValue,
     setButtonPopup,
     currentLampId,
+    currentBrightness,
+    setCurrentBrightness,
   } = React.useContext(GlobalContext);
-
-  const [, forceRerender] = useReducer((x) => x + 1, 0);
 
   const options = [
     { label: value ? value : "Not assigned" },
@@ -45,14 +39,15 @@ export default function IconMenu(props) {
 
     if (temp[0]) {
       setValue(temp[0].bulbId);
+      setCurrentBrightness(temp[0].brightness);
     }
   }, [currentLampId]);
 
-  const handleChange = async (event) => {
+  const handleBulbIdChange = (event) => {
     setCurrentBulbId(event.target.value);
-    console.log(event.target.value);
+    console.log("this", event.target.value);
     setValue(event.target.value);
-    await GraphQLHandler(
+    GraphQLHandler(
       props.id,
       "lat",
       "lng",
@@ -70,6 +65,23 @@ export default function IconMenu(props) {
 
   let QrHandler = () => {
     setButtonPopup(true);
+  };
+
+  let brightnessHandler = (e) => {
+    setCurrentBrightness(e.target.value);
+  };
+
+  let brightnessCommitHandler = (e) => {
+    GraphQLHandler(
+      props.id,
+      "lat",
+      "lng",
+      "brightness",
+      activeMap,
+      "unrelated",
+      currentBrightness
+    );
+    console.log(currentBrightness);
   };
 
   // TODO: from the markers list we need the bulbID from the array of objects identified with the props.id
@@ -97,25 +109,17 @@ export default function IconMenu(props) {
     <Paper sx={{ width: 300, maxWidth: "100%" }}>
       <MenuList>
         <MenuItem>
-          <ListItemIcon>
-            <Cloud fontSize="large" />
-          </ListItemIcon>
           <ListItemText>Lamp {props.id}</ListItemText>
-          <Typography variant="body2" color="text.secondary">
-            ⌘X
-          </Typography>
         </MenuItem>
+        <Divider />
         <MenuItem>
-          <ListItemIcon>
-            <ContentCopy fontSize="small" />
-          </ListItemIcon>
           <ListItemText>
             <div>
               <Dropdown
                 label="BulbId:"
                 options={options}
                 value={value}
-                onChange={handleChange}
+                onChange={handleBulbIdChange}
               />
             </div>
           </ListItemText>
@@ -123,21 +127,23 @@ export default function IconMenu(props) {
             <button onClick={QrHandler}>Scan</button>
           </Typography>
         </MenuItem>
-        <MenuItem>
-          <ListItemIcon>
-            <button onClick={(e) => props.handleClick(e, 100)}></button>
-            <ContentPaste fontSize="small" />
-          </ListItemIcon>
-
-          <ListItemText>Paste</ListItemText>
-          <Typography variant="body2" color="text.secondary"></Typography>
-        </MenuItem>
         <Divider />
         <MenuItem>
-          <ListItemIcon>
-            <Cloud fontSize="small" />
-          </ListItemIcon>
-          <ListItemText>Web Clipboard</ListItemText>
+          <ListItemText>
+            {currentBrightness !== 0
+              ? `Brightness: ${currentBrightness}%`
+              : "Lamp disabled"}
+            <br />
+            <Slider
+              size="small"
+              value={Number(currentBrightness)}
+              aria-label="Small"
+              valueLabelDisplay="auto"
+              onChange={brightnessHandler}
+              onChangeCommitted={brightnessCommitHandler}
+            />
+          </ListItemText>
+          <Typography variant="body2" color="text.secondary"></Typography>
         </MenuItem>
       </MenuList>
     </Paper>

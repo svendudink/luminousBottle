@@ -229,7 +229,11 @@ export default function EnhancedTable() {
   };
 
   useEffect(() => {
-    setPage(Math.ceil(currentLampId / rowsPerPage) - 1);
+    setPage(
+      Math.ceil(currentLampId / rowsPerPage) - 1 === -1
+        ? 0
+        : Math.ceil(currentLampId / rowsPerPage) - 1
+    );
     setSelected([currentLampId.toString()]);
   }, [currentLampId]);
 
@@ -313,6 +317,7 @@ export default function EnhancedTable() {
                   .map((row, index) => {
                     const isItemSelected = isSelected(row.id);
                     const labelId = `enhanced-table-checkbox-${index}`;
+                    console.log("check", row);
 
                     return (
                       <TableRow
@@ -344,7 +349,9 @@ export default function EnhancedTable() {
 
                         <TableCell align="left">{row.bulbId}</TableCell>
                         <TableCell align="left">
-                          {row.individualBrightness}
+                          {Number(row.brightness) !== 0
+                            ? `${row.brightness}%`
+                            : "Lamp disabled"}
                         </TableCell>
                       </TableRow>
                     );

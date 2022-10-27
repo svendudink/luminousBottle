@@ -1,10 +1,10 @@
 import { useContext, useState } from "react";
 import { useEffect } from "react";
 import { GlobalContext } from "../components/context/GlobalContext";
-import ReactDOM from "react-dom";
+
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 import { Carousel } from "react-responsive-carousel";
-import PictureCarousel from "../components/Carousel";
+
 import "./Showroom.css";
 import ReactPlayer from "react-player";
 import { Button } from "@mui/material";
@@ -27,7 +27,6 @@ export const CarouselRenderer = ({ event }) => {
     arr = [
       IMG_067X,
       IMG_0677,
-
       IMG_0686,
       IMG_0687,
       IMG_0688,
@@ -46,7 +45,7 @@ export const CarouselRenderer = ({ event }) => {
       showStatus={false}
     >
       {arr.map((e) => (
-        <div key={Math.random()}>
+        <div className="picdiv" key={Math.random()}>
           <img className="images" src={e} alt="none" />
           <p className="legend">Legend 1</p>
         </div>
@@ -82,6 +81,7 @@ export const Showroom = () => {
 
   useEffect(() => {
     setActivePage("showroom");
+    document.title = "Bottle Luminous: Showroom";
   });
   return (
     <div>
@@ -124,27 +124,14 @@ export const Showroom = () => {
             dynamicHeight={true}
             className="carouselspecs"
             showStatus={false}
-          >
-            {/* <div>
-              <img className="images" src={lamp1a} alt="none" />
-              <p className="legend">Legend 1</p>
-            </div>
-            <div>
-              <img src={lamp2a} alt="none" />
-              <p className="legend">Legend 2</p>
-            </div>
-            <div>
-              <img src={lamp2b} alt="none" />
-              <p className="legend">Legend 3</p>
-            </div> */}
-          </Carousel>
+          ></Carousel>
         )}
       </div>
       <div>
         <Button onClick={() => setActiveCarousel("preproductionpics")}>
           Production fotos
         </Button>
-        {/* <Button onClick={() => setActiveCarousel("preproductionvideos")}>
+        <Button onClick={() => setActiveCarousel("preproductionvideos")}>
           Production videos
         </Button>
         <Button onClick={() => setActiveCarousel("castlepics")}>
@@ -158,7 +145,7 @@ export const Showroom = () => {
         </Button>
         <Button onClick={() => setActiveCarousel("brandenburgvideos")}>
           Brandenburg Burn videos
-        </Button> */}
+        </Button>
       </div>
     </div>
   );

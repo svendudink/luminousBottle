@@ -131,6 +131,8 @@ const Marker = (options) => {
     map,
     centerOption,
     setCenterOption,
+    currentBrightness,
+    setCurrentBrightness,
   } = useContext(GlobalContext);
 
   const [marker, setMarker] = React.useState();
@@ -151,14 +153,16 @@ const Marker = (options) => {
   React.useEffect(() => {
     if (marker) {
       marker.setOptions(options);
-      setCenterOption("firstMarker");
+      // setCenterOption("firstMarker");
+      console.log("mapjs");
 
       marker.addListener("dragend", (e, t, b) => {
         const lat = e.latLng.lat();
         const lng = e.latLng.lng();
         const id = marker.lampId;
         const bulbId = markers[marker.index].bulbId;
-        markers[marker.index] = { id, lat, lng, bulbId };
+        const brightness = markers[marker.index].brightness;
+        markers[marker.index] = { id, lat, lng, bulbId, brightness };
 
         setMarkers(markers);
         GraphQLHandler(id, lat, lng, "update", activeMap);
@@ -171,14 +175,21 @@ const Marker = (options) => {
       marker.addListener("click", (e, t, b) => {
         setBulbConfiguratorVisibility("visible");
         setCurrentLampId(marker.lampId);
+        setCenter({
+          lat: map.center.lat(),
+          lng: map.center.lng(),
+        });
+        // end
         setZoom(map.zoom);
         console.log(currentLampId);
 
-        setCenter({ lat: marker.position.lat(), lng: marker.position.lng() });
         let temp = markers.filter((filterMarker) => {
           return filterMarker.id === marker.lampId;
         });
         setCurrentBulbId(temp[0].bulbId);
+        setCurrentBrightness(temp[0].brightness);
+        console.log(temp[0].brightness);
+
         setValue(temp[0].bulbId);
       });
     }
