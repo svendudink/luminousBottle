@@ -15,7 +15,7 @@ export const IoContextProvider = (props) => {
       console.log(socket.connected);
       setConnect(true);
 
-      socket = io.connect("http://79.215.208.36:8081", {
+      socket = io.connect("http://bottle.hopto.org:8081", {
         allowRequest: (req, callback) => {
           callback(null, req.headers.origin === undefined);
         },

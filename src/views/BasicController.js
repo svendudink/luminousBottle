@@ -75,7 +75,7 @@ const BasicController = () => {
       }"}){notDefined}}`,
     };
 
-    await fetch("http://79.215.208.36:8080/graphql", {
+    await fetch("http://bottle.hopto.org:8080/graphql", {
       method: "POST",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify(graphqlQuery),
