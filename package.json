@@ -1,7 +1,7 @@
 {
   "name": "front",
   "version": "0.1.0",
-  "homepage": "https://svendudink.github.io/relativepath",
+  "homepage": "https://svendudink.github.io/",
   "private": true,
   "dependencies": {
     "@googlemaps/react-wrapper": "^1.1.35",
