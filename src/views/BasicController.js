@@ -9,9 +9,15 @@ import MenuItem from "@mui/material/MenuItem";
 import FormControl from "@mui/material/FormControl";
 import Select from "@mui/material/Select";
 import { Checkbox } from "@mui/material";
+import AndroidServerStatus from "../components/AndroidServerStatus";
+import Switch from "@mui/material/Switch";
+import FormControlLabel from "@mui/material";
+import { Slider } from "@mui/material";
 
+import FormGroup from "@mui/material";
 import { GlobalContext } from "../components/context/GlobalContext";
 import Draggable from "react-draggable";
+import image from "../media/Untitled-fococlipping-standard.png";
 
 import { ioContext } from "../components/context/IoConnectContext";
 import Video from "../components/Video";
@@ -20,16 +26,15 @@ const BasicController = () => {
   const { filteredEventList, GraphQLHandler, bulbIdList, setActivePage } =
     useContext(GlobalContext);
 
-  const { socket, connect, setConnect, isConnected, setIsConnected } =
-    useContext(ioContext);
+  const { serverStatus } = useContext(ioContext);
 
   const [bulbMovement, setBulbMovement] = useState("0");
   const [bulbColours, setbulbColours] = useState("0");
   const [mapping, setMapping] = useState(`Empty`);
   const [liveVideo, setLiveVideo] = useState("");
-  const liveVideRef = useRef();
-
-  const fps = 15;
+  const [eventsDisabled, setEventsDisabled] = useState(false);
+  const [lightDisabled, setLightDisabled] = useState(true);
+  const [currentBrightness, setCurrentBrightness] = useState(100);
 
   /////////////////////////////////////Sven's//Coding/ Date: 17-10-2022 15:33 ////////////
   // Initial Loading of the list of Events
@@ -44,40 +49,11 @@ const BasicController = () => {
     GraphQLHandler(0, "center.lat", "center.lng", "firstLoad", "textValue");
   }
 
-  /////////////////////////////////////Sven's//Coding/ Date: 21-10-2022 15:41 ////////////
-  // play live video
-  /////////////////////////////////////////gnidoC//s'nevS////////////////////////////////
-
-  // const socket = io.connect("http://localhost:8080");
-  // socket.on("image", (image) => {
-  //   console.log('data', data);
-  //   const img = document.getElementById("image");
-  //   img.src = `data:image/jpeg;base64,${image}`;
-  //   setLiveVideo(`data:image/jpeg;base64,${image}`);
-  // });
-
-  // const img = document.getElementById("image");
-  // img.src = `data:image/jpeg;base64,${image}`;
-  // setLiveVideo(`data:image/jpeg;base64,${image}`);
-
-  // const socket = io.connect("http://localhost:8081", {
-  //   allowRequest: (req, callback) => {
-  //     callback(null, req.headers.origin === undefined); // cross-origin requests will not be allowed
-  //   },
-  // });
-
-  // socket.on("image", (image) => {
-  //   setLiveVideo(image);
-  //   socket.off("disconnect");
-  // });
-
-  //socket.on("connect");
-
-  // socket.on("image", (image) => {
-  //   setLiveVideo(image);
-  //   socket.off("image");
-  // });
-  console.log("rendertest");
+  useEffect(() => {
+    if (serverStatus === "Direct control mode started") {
+      setLightDisabled(false);
+    }
+  }, [serverStatus]);
 
   /////////////////////////////////////Sven's//Coding/ Date: 17-10-2022 15:33 ////////////
   // sends parameters to backend for control of android device
@@ -99,7 +75,7 @@ const BasicController = () => {
       }"}){notDefined}}`,
     };
 
-    await fetch("http://localhost:8080/graphql", {
+    await fetch("http://79.215.208.36:8080/graphql", {
       method: "POST",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify(graphqlQuery),
@@ -114,6 +90,36 @@ const BasicController = () => {
   // Pre Alpha functionality
   /////////////////////////////////////////gnidoC//s'nevS////////////////////////////////
 
+  const directControl = (e) => {
+    if (e.target.checked) {
+      console.log("checked");
+      setEventsDisabled(true);
+      GraphQLHandler(
+        0,
+        "center.lat",
+        "center.lng",
+        "directEvent",
+        "textValue",
+        "none",
+        "none",
+        "enableDirectControl"
+      );
+    } else {
+      setLightDisabled(true);
+      setEventsDisabled(false);
+      GraphQLHandler(
+        0,
+        "center.lat",
+        "center.lng",
+        "directEvent",
+        "textValue",
+        "none",
+        "none",
+        "disableDirectControl"
+      );
+    }
+  };
+
   const [preAlphaCheckBox, setPreAlphaCheckBox] = useState(true);
 
   const handleCheckBoxChange = (e) => {
@@ -121,17 +127,39 @@ const BasicController = () => {
     setPreAlphaCheckBox(e.target.checked);
   };
 
-  const directColorHandler = (e) => {
+  const directEventHandler = (e) => {
     GraphQLHandler(
       0,
       "center.lat",
       "center.lng",
-      "directColor",
+      "directEvent",
       "textValue",
       "none",
       "none",
       e
     );
+  };
+
+  /////////////////////////////////////Sven's//Coding/ Date: 09-11-2022 23:07 ////////////
+  // Brightness handling
+  /////////////////////////////////////////gnidoC//s'nevS////////////////////////////////
+
+  const brightnessHandler = (event) => {
+    setCurrentBrightness(event.target.value);
+  };
+
+  const brightnessCommitHandler = (event) => {
+    GraphQLHandler(
+      0,
+      "center.lat",
+      "center.lng",
+      "directEvent",
+      "textValue",
+      "none",
+      currentBrightness,
+      "brightness"
+    );
+    console.log(event);
   };
 
   return (
@@ -211,8 +239,13 @@ const BasicController = () => {
       </Button>
       <br></br>
       <br></br>
-      <Button id={0} onClick={clickHandler} variant="contained">
-        Reboot Device in download mode and write lightfile to phone
+      <Button
+        disabled={eventsDisabled}
+        id={0}
+        onClick={clickHandler}
+        variant="contained"
+      >
+        send to phone and start event
       </Button>
       <br></br>
       <br></br>
@@ -225,6 +258,17 @@ const BasicController = () => {
        /////////////////////////////////////////gnidoC//s'nevS//////////////////////////////// */}
       {preAlphaCheckBox && (
         <div>
+          <div>
+            <div
+              style={{
+                borderTop: "2px solid #fff ",
+                marginLeft: 20,
+                marginRight: 20,
+                marginTop: 30,
+              }}
+            ></div>
+            <AndroidServerStatus />
+          </div>
           <div
             style={{
               borderTop: "2px solid #fff ",
@@ -232,33 +276,60 @@ const BasicController = () => {
               marginRight: 20,
               marginTop: 30,
             }}
-          ></div>
-          Project: Direct control of lightbulbs, technology used: ADB send touch
-          event to control <br />
-          Status: works but delay is +500ms, possible solution is using
-          monkeyrunner in SDK package
-          <br />
+          >
+            {" "}
+            <Switch onChange={directControl} />
+            Enable direct control of lights, this will stop any running event
+            and will need to wait for reconnect
+          </div>
           <Button
             id={0}
-            onClick={() => directColorHandler("red")}
+            onClick={() => directEventHandler("red")}
             variant="contained"
+            disabled={lightDisabled}
           >
             RED
           </Button>
           <Button
             id={0}
-            onClick={() => directColorHandler("green")}
+            onClick={() => directEventHandler("green")}
             variant="contained"
+            disabled={lightDisabled}
           >
             GREEN
           </Button>
           <Button
             id={0}
-            onClick={() => directColorHandler("blue")}
+            onClick={() => directEventHandler("blue")}
             variant="contained"
+            disabled={lightDisabled}
           >
             BLUE
           </Button>
+          <br></br>
+          Off
+          <Slider
+            size="large"
+            value={Number(currentBrightness)}
+            aria-label="Small"
+            valueLabelDisplay="auto"
+            onChange={brightnessHandler}
+            onChangeCommitted={brightnessCommitHandler}
+            disabled={lightDisabled}
+            style={{
+              width: "150px",
+            }}
+          />{" "}
+          100%
+          <div
+            style={{
+              width: "150px",
+              position: "relative",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+          ></div>
           <div>
             <div
               style={{

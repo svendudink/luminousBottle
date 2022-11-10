@@ -3,7 +3,7 @@ import { ioContext } from "./context/IoConnectContext";
 
 const Video = () => {
   const [liveVideo, setLiveVideo] = useState("");
-  const fps = 3;
+
   const { socket } = useContext(ioContext);
 
   socket.on("image", setLiveVideo);

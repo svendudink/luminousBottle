@@ -1,5 +1,4 @@
 import { createContext, useState } from "react";
-import { io } from "https://cdn.socket.io/4.3.2/socket.io.esm.min.js";
 
 export const GlobalContext = createContext();
 export const GlobalContextProvider = (props) => {
@@ -55,7 +54,7 @@ export const GlobalContextProvider = (props) => {
       query: `mutation {MapLamps(SetMap: {bulbNumber: "${index}",lat: "${lat}", lng: "${lng}", request: "${request}", bulbId: "${bulbId}", mapName: "${mapName}", brightness: "${brightness}", extended: "${extended}"}){bulbIdList mapArray eventList availableBulbIdList }}`,
     };
 
-    await fetch("http://localhost:8080/graphql", {
+    await fetch("http://79.215.208.36:8080/graphql", {
       method: "POST",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify(graphqlQuery),
