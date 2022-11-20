@@ -179,9 +179,9 @@ const BasicController = () => {
     <div>
       <div>
         {" "}
-        Run website from home Server, this will give access to live controlling
-        the hardware, due to hardware limitations there can be a max of 1 client
-        connected to the home server:{" "}
+        Remote control lights with video livestream, this option is in beta mode
+        and is not fully stable, in case you run into problems, click on reset
+        server to solve{" "}
         <Checkbox
           checked={preAlphaCheckBox}
           onChange={handleCheckBoxChange}
