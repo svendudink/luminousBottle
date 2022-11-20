@@ -55,7 +55,7 @@ export const GlobalContextProvider = (props) => {
       query: `mutation {MapLamps(SetMap: {bulbNumber: "${index}",lat: "${lat}", lng: "${lng}", request: "${request}", bulbId: "${bulbId}", mapName: "${mapName}", brightness: "${brightness}", extended: "${extended}"}){bulbIdList mapArray eventList availableBulbIdList }}`,
     };
 
-    await fetch(`https://${selectServer}:8080/graphql`, {
+    await fetch(`https://bottle.hopto.org:8080/graphql`, {
       method: "POST",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify(graphqlQuery),
