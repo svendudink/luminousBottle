@@ -23,8 +23,14 @@ import { ioContext } from "../components/context/IoConnectContext";
 import Video from "../components/Video";
 
 const BasicController = () => {
-  const { filteredEventList, GraphQLHandler, bulbIdList, setActivePage } =
-    useContext(GlobalContext);
+  const {
+    filteredEventList,
+    GraphQLHandler,
+    bulbIdList,
+    setActivePage,
+    selectServer,
+    setSelectServer,
+  } = useContext(GlobalContext);
 
   const { serverStatus } = useContext(ioContext);
 
@@ -75,7 +81,7 @@ const BasicController = () => {
       }"}){notDefined}}`,
     };
 
-    await fetch("http://bottle.hopto.org:8080/graphql", {
+    await fetch(`https://${selectServer}:8080/graphql`, {
       method: "POST",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify(graphqlQuery),
@@ -120,11 +126,16 @@ const BasicController = () => {
     }
   };
 
-  const [preAlphaCheckBox, setPreAlphaCheckBox] = useState(true);
+  const [preAlphaCheckBox, setPreAlphaCheckBox] = useState(false);
 
   const handleCheckBoxChange = (e) => {
     console.log(e.target.checked);
     setPreAlphaCheckBox(e.target.checked);
+    if (e.target.checked) {
+      setSelectServer("bottle.hopto.org");
+    } else {
+      setSelectServer("bottleluminousback.herokuapp.com");
+    }
   };
 
   const directEventHandler = (e) => {
@@ -166,93 +177,98 @@ const BasicController = () => {
     <div>
       <div>
         {" "}
-        Enable Pre-Alpha functionality:{" "}
+        Run website from home Server, this will give access to live controlling
+        the hardware, due to hardware limitations there can be a max of 1 client
+        connected to the home server:{" "}
         <Checkbox
           checked={preAlphaCheckBox}
           onChange={handleCheckBoxChange}
           inputProps={{ "aria-label": "controlled" }}
         />
-        (Warning, enabling Pre-Alpha functions is unstable and might break other
-        functions as well)
       </div>
-      <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-        <InputLabel id="demo-select-small">Bulb travel pattern</InputLabel>
-        <Select
-          labelId="demo-select-small"
-          id="demo-select-small"
-          value={bulbMovement === "0" ? "0" : bulbMovement.target.value}
-          label="Bulb travel pattern"
-          onChange={setBulbMovement}
-        >
-          <MenuItem value=""></MenuItem>
-          <MenuItem value={"0"}>Breathing whole group</MenuItem>
-          <MenuItem value={"2"}>Up and down random</MenuItem>
-          <MenuItem value={"1"}>Fully random</MenuItem>
-        </Select>
-      </FormControl>
-      <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-        <InputLabel id="demo-select-small">Bulb Colours</InputLabel>
-        <Select
-          labelId="demo-select-small"
-          id="demo-select-small"
-          value={bulbColours === "0" ? "0" : bulbColours.target.value}
-          label="Bulb travel pattern"
-          onChange={setbulbColours}
-        >
-          <MenuItem value=""></MenuItem>
-          <MenuItem value={"0"}>Full random colours</MenuItem>
-          <MenuItem value={"1"}>Specified colours, set in backend</MenuItem>
-        </Select>
-      </FormControl>
-      <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-        <InputLabel id="demo-select-small">Mapping</InputLabel>
-        <Select
-          labelId="demo-select-small"
-          id="demo-select-small"
-          value={mapping}
-          label="Mapping"
-          onChange={(e) => {
-            setMapping(e.target.value);
-          }}
-        >
-          <MenuItem key={Math.random()} value="Empty">
-            Select
-          </MenuItem>
-          {filteredEventList.map((option) => {
-            return (
-              <MenuItem key={Math.random()} value={option.name}>
-                {option.name}
+      {preAlphaCheckBox && (
+        <div>
+          <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+            <InputLabel id="demo-select-small">Bulb travel pattern</InputLabel>
+            <Select
+              labelId="demo-select-small"
+              id="demo-select-small"
+              value={bulbMovement === "0" ? "0" : bulbMovement.target.value}
+              label="Bulb travel pattern"
+              onChange={setBulbMovement}
+            >
+              <MenuItem value=""></MenuItem>
+              <MenuItem value={"0"}>Breathing whole group</MenuItem>
+              <MenuItem value={"2"}>Up and down random</MenuItem>
+              <MenuItem value={"1"}>Fully random</MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+            <InputLabel id="demo-select-small">Bulb Colours</InputLabel>
+            <Select
+              labelId="demo-select-small"
+              id="demo-select-small"
+              value={bulbColours === "0" ? "0" : bulbColours.target.value}
+              label="Bulb travel pattern"
+              onChange={setbulbColours}
+            >
+              <MenuItem value=""></MenuItem>
+              <MenuItem value={"0"}>Full random colours</MenuItem>
+              <MenuItem value={"1"}>Specified colours, set in backend</MenuItem>
+            </Select>
+          </FormControl>
+          <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+            <InputLabel id="demo-select-small">Mapping</InputLabel>
+            <Select
+              labelId="demo-select-small"
+              id="demo-select-small"
+              value={mapping}
+              label="Mapping"
+              onChange={(e) => {
+                setMapping(e.target.value);
+              }}
+            >
+              <MenuItem key={Math.random()} value="Empty">
+                Select
               </MenuItem>
-            );
-          })}
-        </Select>
-      </FormControl>
-      <br></br>
-      <br></br>
-      <Button
-        disabled={mapping === "Empty" ? true : false}
-        id={1}
-        onClick={clickHandler}
-        variant="contained"
-      >
-        Create LightFile
-      </Button>
-      <br></br>
-      <br></br>
-      <Button
-        disabled={eventsDisabled}
-        id={0}
-        onClick={clickHandler}
-        variant="contained"
-      >
-        send to phone and start event
-      </Button>
-      <br></br>
-      <br></br>
-      <div></div>
-      <Button id={2} onClick={clickHandler} variant="contained">
-        Read file from android
-      </Button>
+              {filteredEventList.map((option) => {
+                return (
+                  <MenuItem key={Math.random()} value={option.name}>
+                    {option.name}
+                  </MenuItem>
+                );
+              })}
+            </Select>
+          </FormControl>
+
+          <br></br>
+          <br></br>
+          <Button
+            disabled={mapping === "Empty" ? true : false}
+            id={1}
+            onClick={clickHandler}
+            variant="contained"
+          >
+            Create LightFile
+          </Button>
+          <br></br>
+          <br></br>
+          <Button
+            disabled={eventsDisabled}
+            id={0}
+            onClick={clickHandler}
+            variant="contained"
+          >
+            send to phone and start event
+          </Button>
+          <br></br>
+          <br></br>
+          <div></div>
+          <Button id={2} onClick={clickHandler} variant="contained">
+            Read file from android
+          </Button>
+        </div>
+      )}
       {/* /////////////////////////////////////Sven's//Coding/ Date: 18-10-2022 12:35 ////////////  
        //  Pre Alpha
        /////////////////////////////////////////gnidoC//s'nevS//////////////////////////////// */}

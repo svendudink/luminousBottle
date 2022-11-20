@@ -26,6 +26,7 @@ export const GlobalContextProvider = (props) => {
   const [selected, setSelected] = useState([]);
   const [infoVisibility, setInfoVisibility] = useState("hidden");
   const [lampBackGround, setLampBackground] = useState("startPagewhitea");
+  const [selectServer, setSelectServer] = useState("localhost");
   const [filteredEventList, setFilteredEventList] = useState([
     {
       schema: "main",
@@ -54,7 +55,7 @@ export const GlobalContextProvider = (props) => {
       query: `mutation {MapLamps(SetMap: {bulbNumber: "${index}",lat: "${lat}", lng: "${lng}", request: "${request}", bulbId: "${bulbId}", mapName: "${mapName}", brightness: "${brightness}", extended: "${extended}"}){bulbIdList mapArray eventList availableBulbIdList }}`,
     };
 
-    await fetch("http://bottle.hopto.org:8080/graphql", {
+    await fetch(`https://${selectServer}:8080/graphql`, {
       method: "POST",
       headers: { "Content-type": "application/json" },
       body: JSON.stringify(graphqlQuery),
@@ -153,7 +154,10 @@ export const GlobalContextProvider = (props) => {
         activePage,
         setActivePage,
         currentBrightness,
+
         setCurrentBrightness,
+        selectServer,
+        setSelectServer,
       }}
     >
       {props.children}
