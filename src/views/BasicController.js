@@ -179,9 +179,9 @@ const BasicController = () => {
     <div>
       <div>
         {" "}
-        Remote control lights with video livestream, this option is in beta mode
-        and is not fully stable, in case you run into problems, click on reset
-        server to solve{" "}
+        Remote control lights with video livestream, this option is in alpha
+        mode and is not fully stable, in case you run into problems, click on
+        reset server to solve{" "}
         <Checkbox
           checked={preAlphaCheckBox}
           onChange={handleCheckBoxChange}
@@ -268,6 +268,13 @@ const BasicController = () => {
           <div></div>
           <Button id={2} onClick={clickHandler} variant="contained">
             Read file from android
+          </Button>
+          <Button
+            id={0}
+            onClick={() => directEventHandler("resetServer")}
+            variant="contained"
+          >
+            BLUE
           </Button>
         </div>
       )}
