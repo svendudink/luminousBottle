@@ -34,6 +34,8 @@ const BasicController = () => {
 
   const { serverStatus } = useContext(ioContext);
 
+  console.log(serverStatus);
+
   const [bulbMovement, setBulbMovement] = useState("0");
   const [bulbColours, setbulbColours] = useState("0");
   const [mapping, setMapping] = useState(`Empty`);
@@ -56,7 +58,7 @@ const BasicController = () => {
   }
 
   useEffect(() => {
-    if (serverStatus === "Direct control mode started") {
+    if (serverStatus.includes("Direct control mode started")) {
       setLightDisabled(false);
     }
   }, [serverStatus]);
