@@ -266,16 +266,6 @@ const BasicController = () => {
           <br></br>
           <br></br>
           <div></div>
-          <Button id={2} onClick={clickHandler} variant="contained">
-            Read file from android
-          </Button>
-          <Button
-            id={0}
-            onClick={() => directEventHandler("resetServer")}
-            variant="contained"
-          >
-            BLUE
-          </Button>
         </div>
       )}
       {/* /////////////////////////////////////Sven's//Coding/ Date: 18-10-2022 12:35 ////////////  
@@ -283,6 +273,19 @@ const BasicController = () => {
        /////////////////////////////////////////gnidoC//s'nevS//////////////////////////////// */}
       {preAlphaCheckBox && (
         <div>
+          <div
+            style={{
+              borderTop: "2px solid #fff ",
+              marginLeft: 20,
+              marginRight: 20,
+              marginTop: 30,
+            }}
+          >
+            Connection time to lights might take upto 3-4 minutes, this is due
+            to the many bluetooth devices in the area and the lamps all being
+            positioned in the range of the main controller, in real live
+            situations this is not the case and therefore this will not be fixed
+          </div>
           <div>
             <div
               style={{
