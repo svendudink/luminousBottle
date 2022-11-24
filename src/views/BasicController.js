@@ -172,6 +172,7 @@ const BasicController = () => {
         currentBrightness,
         "close"
       );
+      return (event.returnValue = "Are you sure you want to exit?");
     };
 
     window.addEventListener("beforeunload", handleTabClose);
