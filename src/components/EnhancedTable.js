@@ -317,7 +317,6 @@ export default function EnhancedTable() {
                   .map((row, index) => {
                     const isItemSelected = isSelected(row.id);
                     const labelId = `enhanced-table-checkbox-${index}`;
-                    console.log("check", row);
 
                     return (
                       <TableRow

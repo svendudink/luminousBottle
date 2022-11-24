@@ -7,6 +7,7 @@ import MenuItem from "@mui/material/MenuItem";
 import ListItemText from "@mui/material/ListItemText";
 import Typography from "@mui/material/Typography";
 import { Slider } from "@mui/material";
+import { ColorButton } from "./ColorButton";
 
 import { GlobalContext } from "./context/GlobalContext";
 
@@ -23,6 +24,8 @@ export default function IconMenu(props) {
     currentLampId,
     currentBrightness,
     setCurrentBrightness,
+    selectedColors,
+    setSelectedColors,
   } = React.useContext(GlobalContext);
 
   const options = [
@@ -40,6 +43,10 @@ export default function IconMenu(props) {
     if (temp[0]) {
       setValue(temp[0].bulbId);
       setCurrentBrightness(temp[0].brightness);
+      if (temp[0].colors) {
+        console.log(JSON.parse(temp[0].colors));
+        setSelectedColors(JSON.parse(temp[0].colors));
+      }
     }
   }, [currentLampId]);
 
@@ -82,6 +89,20 @@ export default function IconMenu(props) {
       currentBrightness
     );
     console.log(currentBrightness);
+  };
+
+  let ColorSelectHandler = (e) => {
+    GraphQLHandler(
+      props.id,
+      "lat",
+      "lng",
+      "addColor",
+      activeMap,
+      "unrelated",
+      "none",
+      e
+    );
+    console.log(e);
   };
 
   // TODO: from the markers list we need the bulbID from the array of objects identified with the props.id
@@ -144,6 +165,17 @@ export default function IconMenu(props) {
             />
           </ListItemText>
           <Typography variant="body2" color="text.secondary"></Typography>
+        </MenuItem>
+        <Divider />
+        <MenuItem>
+          <ColorButton onClick={ColorSelectHandler} color={"red"} />
+          <ColorButton onClick={ColorSelectHandler} color={"green"} />
+          <ColorButton onClick={ColorSelectHandler} color={"blue"} />
+        </MenuItem>
+        <MenuItem>
+          <ColorButton onClick={ColorSelectHandler} color={"orange"} />
+          <ColorButton onClick={ColorSelectHandler} color={"yellow"} />
+          <ColorButton onClick={ColorSelectHandler} color={"purple"} />
         </MenuItem>
       </MenuList>
     </Paper>

@@ -27,6 +27,7 @@ export const GlobalContextProvider = (props) => {
   const [infoVisibility, setInfoVisibility] = useState("hidden");
   const [lampBackGround, setLampBackground] = useState("startPagewhitea");
   const [selectServer, setSelectServer] = useState("localhost");
+  const [selectedColors, setSelectedColors] = useState([]);
   const [filteredEventList, setFilteredEventList] = useState([
     {
       schema: "main",
@@ -67,7 +68,8 @@ export const GlobalContextProvider = (props) => {
           request === "horizontalScan" ||
           request === "deleteActive" ||
           request === "addLampBeforeActive" ||
-          request === "brightness"
+          request === "brightness" ||
+          request === "addColor"
         ) {
           setMarkers(JSON.parse(resData.data.MapLamps.mapArray));
           console.log(JSON.parse(resData.data.MapLamps.mapArray));
@@ -158,6 +160,8 @@ export const GlobalContextProvider = (props) => {
         setCurrentBrightness,
         selectServer,
         setSelectServer,
+        selectedColors,
+        setSelectedColors,
       }}
     >
       {props.children}
