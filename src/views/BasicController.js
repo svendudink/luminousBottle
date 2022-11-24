@@ -153,6 +153,34 @@ const BasicController = () => {
     );
   };
 
+  /////////////////////////////////////Sven's//Coding/ Date: 24-11-2022 13:19 ////////////
+  // before closing tab
+  /////////////////////////////////////////gnidoC//s'nevS////////////////////////////////
+  useEffect(() => {
+    const handleTabClose = (event) => {
+      event.preventDefault();
+
+      console.log("beforeunload event triggered");
+
+      GraphQLHandler(
+        0,
+        "center.lat",
+        "center.lng",
+        "directEvent",
+        "textValue",
+        "none",
+        currentBrightness,
+        "close"
+      );
+    };
+
+    window.addEventListener("beforeunload", handleTabClose);
+
+    return () => {
+      window.removeEventListener("beforeunload", handleTabClose);
+    };
+  }, []);
+
   /////////////////////////////////////Sven's//Coding/ Date: 09-11-2022 23:07 ////////////
   // Brightness handling
   /////////////////////////////////////////gnidoC//s'nevS////////////////////////////////
