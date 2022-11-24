@@ -176,7 +176,7 @@ const Home = () => {
           onMouseEnter={(e) => backGround("lamp2", 4, e)}
           onMouseLeave={(e) => backGround("startPagewhite", 1, e)}
           cx="38%"
-          cy="90%"
+          cy="80%"
           r="7%"
           stroke="black"
           strokeWidth="0"
@@ -213,7 +213,7 @@ const Home = () => {
           onMouseEnter={(e) => infoWindowHandler("QR", 2, e)}
           onMouseLeave={(e) => infoWindowHandler("startPagewhite", 1, e)}
           cx="56%"
-          cy="58%"
+          cy="50%"
           r="5%"
           stroke="#1A2036"
           strokeWidth="3"
@@ -225,7 +225,7 @@ const Home = () => {
           onMouseEnter={(e) => infoWindowHandler("mesh", 2, e)}
           onMouseLeave={(e) => infoWindowHandler("startPagewhite", 1, e)}
           cx="46%"
-          cy="79%"
+          cy="74%"
           r="5%"
           stroke="#1A2036"
           strokeWidth="2"
