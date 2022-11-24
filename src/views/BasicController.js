@@ -399,7 +399,11 @@ const BasicController = () => {
           </div>
           <div>
             <div>
-              <Video />
+              <Draggable>
+                <div>
+                  <Video />
+                </div>
+              </Draggable>
             </div>
           </div>
         </div>
