@@ -16,6 +16,7 @@ import BasicController from "./views/BasicController";
 import CreateMapping from "./views/CreateMapping";
 import Home from "./views/Home";
 import About from "./views/about";
+import Contact from "./views/Contact";
 import { GlobalContext } from "./components/context/GlobalContext";
 import { Showroom } from "./views/Showroom";
 import { IoContextProvider } from "./components/context/IoConnectContext";
@@ -169,6 +170,7 @@ function BackgroundLayer() {
           <Route path="/CreateMapping" element={<CreateMapping />} />
           <Route path="/About" element={<About />} />
           <Route path="/Showroom" element={<Showroom />} />
+          <Route path="/Contact" element={<Contact />} />
         </Routes>
       </div>
     </BrowserRouter>

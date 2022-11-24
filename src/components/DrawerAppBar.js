@@ -22,6 +22,7 @@ const navItems = [
   "Create event map",
   "about this project",
   "Showroom",
+  "Contact",
 ];
 
 export default function DrawerAppBar(props) {
@@ -64,6 +65,9 @@ export default function DrawerAppBar(props) {
     }
     if (event === navItems[4]) {
       navigate("/Showroom");
+    }
+    if (event === navItems[4]) {
+      navigate("/contact");
     }
   };
 
