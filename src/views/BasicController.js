@@ -172,7 +172,7 @@ const BasicController = () => {
         currentBrightness,
         "close"
       );
-      return (event.returnValue = "Are you sure you want to exit?");
+      return console.log("killedServer");
     };
 
     window.addEventListener("beforeunload", handleTabClose);
