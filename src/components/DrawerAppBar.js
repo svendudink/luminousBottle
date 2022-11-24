@@ -66,7 +66,7 @@ export default function DrawerAppBar(props) {
     if (event === navItems[4]) {
       navigate("/Showroom");
     }
-    if (event === navItems[4]) {
+    if (event === navItems[5]) {
       navigate("/contact");
     }
   };
