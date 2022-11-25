@@ -240,6 +240,7 @@ export default function GoogleMap() {
           mapTypeId={"satellite"}
         >
           {markers.map((marker, val) => {
+            console.log(marker.brightness);
             return (
               <Marker
                 draggable={true}
@@ -249,9 +250,13 @@ export default function GoogleMap() {
                 lampId={marker.id}
                 bulbId={marker.bulbId}
                 icon={{
-                  url: `https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_red${
-                    marker.id ? marker.id : 1
-                  }.png`,
+                  url: `https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_${
+                    marker.brightness !== "0"
+                      ? JSON.parse(marker.colors).length === 1
+                        ? JSON.parse(marker.colors)[0]
+                        : "white"
+                      : "black"
+                  }${marker.id ? marker.id : 1}.png`,
                 }}
               />
             );

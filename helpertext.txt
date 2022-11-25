@@ -20,3 +20,15 @@
 
 
  /////////////////////////////////////////gnidoC//s'nevS////////////////////////////////
+
+
+ issues to solve:
+ click on reconnect when pixerl measures 255
+ create a check where a new map wont directly be loaded onto the phone
+ create a more streamlined way where its likely people click on demo mode first
+
+
+
+
+ extra futures to add
+ schedueled events
