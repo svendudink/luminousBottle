@@ -8,6 +8,7 @@ import "./CreateMapping.css";
 import Button from "@mui/material/Button";
 import IconMenu from "../components/IconMenu";
 import QuestionMark from "../components/QuestionMark";
+import { Image } from "react-bootstrap";
 
 const Toolbar = () => {
   return <div className="head"></div>;
@@ -320,6 +321,60 @@ const CreateMapping = () => {
       </div>
       <div className="main">
         <div className="map">
+          <div>
+            Legenda:{"        "}
+            <img
+              src={
+                "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_black.png"
+              }
+              alt={"none"}
+            />
+            = Turned of.{"     "}
+            <img
+              src={
+                "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_red.png"
+              }
+              alt={"none"}
+            />
+            <img
+              src={
+                "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_green.png"
+              }
+              alt={"none"}
+            />
+            <img
+              src={
+                "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_blue.png"
+              }
+              alt={"none"}
+            />
+            <img
+              src={
+                "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_orange.png"
+              }
+              alt={"none"}
+            />
+            <img
+              src={
+                "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_yellow.png"
+              }
+              alt={"none"}
+            />
+            <img
+              src={
+                "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_purple.png"
+              }
+              alt={"none"}
+            />
+            = Color of lamp
+            <img
+              src={
+                "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_white.png"
+              }
+              alt={"none"}
+            />{" "}
+            = Lamp is set to multiColor
+          </div>
           <GoogleMap />
         </div>
         <div className="enhancedTable">

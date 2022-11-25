@@ -155,6 +155,7 @@ export default function IconMenu(props) {
             {currentBrightness !== 0
               ? `Brightness: ${currentBrightness}%`
               : "Lamp disabled"}
+
             <br />
             <Slider
               size="small"

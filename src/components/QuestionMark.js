@@ -60,7 +60,7 @@ const QuestionMark = (props) => {
         onMouseEnter={() => setLocalInfoVisibility("visible")}
         onMouseLeave={() => setLocalInfoVisibility("hidden")}
         style={{
-          position: "absolute",
+          position: "fixed",
           zIndex: "2",
 
           width: boxSize.width,

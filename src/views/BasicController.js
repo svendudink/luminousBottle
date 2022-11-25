@@ -128,7 +128,7 @@ const BasicController = () => {
     }
   };
 
-  const [preAlphaCheckBox, setPreAlphaCheckBox] = useState(false);
+  const [preAlphaCheckBox, setPreAlphaCheckBox] = useState(true);
 
   const handleCheckBoxChange = (e) => {
     console.log(e.target.checked);
@@ -206,17 +206,6 @@ const BasicController = () => {
 
   return (
     <div>
-      <div>
-        {" "}
-        Remote control lights with video livestream, this option is in alpha
-        mode and is not fully stable, in case you run into problems, click on
-        reset server to solve{" "}
-        <Checkbox
-          checked={preAlphaCheckBox}
-          onChange={handleCheckBoxChange}
-          inputProps={{ "aria-label": "controlled" }}
-        />
-      </div>
       {preAlphaCheckBox && (
         <div>
           <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
@@ -268,7 +257,7 @@ const BasicController = () => {
                     {option.name}
                   </MenuItem>
                 );
-              })}
+              })}{" "}
             </Select>
           </FormControl>
 

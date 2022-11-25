@@ -153,8 +153,6 @@ const Marker = (options) => {
   React.useEffect(() => {
     if (marker) {
       marker.setOptions(options);
-      // setCenterOption("firstMarker");
-      console.log("mapjs");
 
       marker.addListener("dragend", (e, t, b) => {
         const lat = e.latLng.lat();
@@ -162,7 +160,8 @@ const Marker = (options) => {
         const id = marker.lampId;
         const bulbId = markers[marker.index].bulbId;
         const brightness = markers[marker.index].brightness;
-        markers[marker.index] = { id, lat, lng, bulbId, brightness };
+        const colors = markers[marker.index].colors;
+        markers[marker.index] = { id, lat, lng, bulbId, brightness, colors };
 
         setMarkers(markers);
         GraphQLHandler(id, lat, lng, "update", activeMap);
