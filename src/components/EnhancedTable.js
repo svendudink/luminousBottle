@@ -24,6 +24,7 @@ import FilterListIcon from "@mui/icons-material/FilterList";
 import { visuallyHidden } from "@mui/utils";
 import { GlobalContext } from "./context/GlobalContext";
 import "./EnhancedTable.css";
+import QuestionMark from "./QuestionMark";
 
 function descendingComparator(a, b, orderBy) {
   if (b[orderBy] < a[orderBy]) {
@@ -161,9 +162,7 @@ const EnhancedTableToolbar = (props) => {
           color="inherit"
           variant="subtitle1"
           component="div"
-        >
-          {numSelected} selected
-        </Typography>
+        ></Typography>
       ) : (
         <Typography
           sx={{ flex: "1 1 100%" }}
@@ -177,9 +176,7 @@ const EnhancedTableToolbar = (props) => {
 
       {numSelected > 0 ? (
         <Tooltip title="Delete">
-          <IconButton>
-            <DeleteIcon />
-          </IconButton>
+          <IconButton></IconButton>
         </Tooltip>
       ) : (
         <Tooltip title="Filter list">

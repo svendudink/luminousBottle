@@ -2,7 +2,7 @@ import React from "react";
 import "./Popup.css";
 import { useContext, useState } from "react";
 import { GlobalContext } from "./context/GlobalContext";
-import Storys from "../media/background/Storys/Storys";
+import Storys from "../media/Storys/Storys";
 
 function TextBubble(props) {
   const { infoVisibility } = useContext(GlobalContext);
@@ -18,7 +18,7 @@ function TextBubble(props) {
         left: `${props.coords.x}`,
         width: "200px",
         height: "100px",
-        backgroundColor: "#1A2036",
+        backgroundColor: "#eeeee4",
         visibility: `${
           infoVisibility === "hidden" && localInfoVisibility === "hidden"
             ? "hidden"

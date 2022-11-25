@@ -18,7 +18,7 @@ import { ThemeProvider, createTheme } from "@mui/material/styles";
 const drawerWidth = 240;
 const navItems = [
   "Home",
-  "Basic controller functions",
+  "Live video demo and device control",
   "Create event map",
   "about this project",
   "Showroom",

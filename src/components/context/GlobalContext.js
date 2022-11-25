@@ -28,6 +28,7 @@ export const GlobalContextProvider = (props) => {
   const [lampBackGround, setLampBackground] = useState("startPagewhitea");
   const [selectServer, setSelectServer] = useState("localhost");
   const [selectedColors, setSelectedColors] = useState([]);
+  const [maxBulbIdLength, setMaxBulbIdLength] = useState(14);
   const [filteredEventList, setFilteredEventList] = useState([
     {
       schema: "main",
@@ -41,7 +42,7 @@ export const GlobalContextProvider = (props) => {
     lat: 53.831777322304355,
     lng: 13.239378406704096,
   });
-  console.log("blabe");
+
   const GraphQLHandler = async (
     index,
     lat,
@@ -72,11 +73,12 @@ export const GlobalContextProvider = (props) => {
           request === "addColor"
         ) {
           setMarkers(JSON.parse(resData.data.MapLamps.mapArray));
-          console.log(JSON.parse(resData.data.MapLamps.mapArray));
+
           setBulbIdList(JSON.parse(resData.data.MapLamps.bulbIdList));
         }
         if (request === "load") {
           setMarkers(JSON.parse(resData.data.MapLamps.mapArray));
+          setMaxBulbIdLength(JSON.parse(resData.data.MapLamps.maxBulbIdLength));
 
           setBulbIdList(JSON.parse(resData.data.MapLamps.bulbIdList));
         } else if (request === "firstLoad") {
@@ -162,6 +164,7 @@ export const GlobalContextProvider = (props) => {
         setSelectServer,
         selectedColors,
         setSelectedColors,
+        maxBulbIdLength,
       }}
     >
       {props.children}

@@ -4,7 +4,7 @@
 
 import { useContext, useEffect } from "react";
 import { GlobalContext } from "../components/context/GlobalContext";
-import { AboutStory } from "../media/background/Storys/Storys";
+import { AboutStory } from "../media/Storys/Storys";
 
 const About = () => {
   const { setActivePage } = useContext(GlobalContext);

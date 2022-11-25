@@ -8,6 +8,7 @@ import ListItemText from "@mui/material/ListItemText";
 import Typography from "@mui/material/Typography";
 import { Slider } from "@mui/material";
 import { ColorButton } from "./ColorButton";
+import QuestionMark from "./QuestionMark";
 
 import { GlobalContext } from "./context/GlobalContext";
 
@@ -171,6 +172,10 @@ export default function IconMenu(props) {
           <ColorButton onClick={ColorSelectHandler} color={"red"} />
           <ColorButton onClick={ColorSelectHandler} color={"green"} />
           <ColorButton onClick={ColorSelectHandler} color={"blue"} />
+          <QuestionMark
+            story={"colors"}
+            size={{ width: "400px", height: "130px" }}
+          />
         </MenuItem>
         <MenuItem>
           <ColorButton onClick={ColorSelectHandler} color={"orange"} />

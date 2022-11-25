@@ -7,6 +7,7 @@ import EnhancedTable from "../components/EnhancedTable";
 import "./CreateMapping.css";
 import Button from "@mui/material/Button";
 import IconMenu from "../components/IconMenu";
+import QuestionMark from "../components/QuestionMark";
 
 const Toolbar = () => {
   return <div className="head"></div>;
@@ -36,6 +37,7 @@ const CreateMapping = () => {
     setCenterOption,
     setZoom,
     setActivePage,
+    maxBulbIdLength,
   } = useContext(GlobalContext);
 
   /////////////////////////////////////Sven's//Coding/ Date: 17-10-2022 15:40 ////////////
@@ -64,9 +66,9 @@ const CreateMapping = () => {
 
   const [, forceRerender] = useReducer((x) => x + 1, 0);
 
-  /////////////////////////////////////Sven's//Coding/ Date: 17-10-2022 15:48 ////////////  
-   // Dropdown menu 
-   /////////////////////////////////////////gnidoC//s'nevS////////////////////////////////
+  /////////////////////////////////////Sven's//Coding/ Date: 17-10-2022 15:48 ////////////
+  // Dropdown menu
+  /////////////////////////////////////////gnidoC//s'nevS////////////////////////////////
 
   const Dropdown = ({ label, value, options, onChange }) => {
     return (
@@ -99,13 +101,11 @@ const CreateMapping = () => {
     }
   };
 
+  console.log(maxBulbIdLength, markers.length);
 
-  /////////////////////////////////////Sven's//Coding/ Date: 17-10-2022 16:09 ////////////  
-   // Sending the map action buttons to backend over GraphQL 
-   /////////////////////////////////////////gnidoC//s'nevS////////////////////////////////
-
-
-
+  /////////////////////////////////////Sven's//Coding/ Date: 17-10-2022 16:09 ////////////
+  // Sending the map action buttons to backend over GraphQL
+  /////////////////////////////////////////gnidoC//s'nevS////////////////////////////////
 
   const actionHandler = async (action) => {
     console.log(currentLampId);
@@ -113,7 +113,7 @@ const CreateMapping = () => {
 
     if (action === "deleteActive" && markers.length <= currentLampId) {
       console.log("checked");
-      setCurrentLampId(currentLampId - 1)
+      setCurrentLampId(currentLampId - 1);
       if (currentLampId === 1) {
         setBulbConfiguratorVisibility("hidden");
       }
@@ -142,7 +142,6 @@ const CreateMapping = () => {
   };
 
   let addNewLampHandler = async () => {
-    
     setCenterOption("mapCenter");
     setCenter({
       lat: map.center.lat(),
@@ -196,8 +195,7 @@ const CreateMapping = () => {
             size="large"
             variant="outlined"
             disabled={
-              activeMap === "(Select)" ||
-              Object.keys(bulbIdList).length <= markers.length
+              activeMap === "(Select)" || maxBulbIdLength <= markers.length
             }
             onClick={() => addNewLampHandler()}
             style={{
@@ -207,7 +205,7 @@ const CreateMapping = () => {
               minHeight: "30px",
             }}
           >
-            {Object.keys(bulbIdList).length <= markers.length
+            {maxBulbIdLength <= markers.length
               ? "MAX BULBS REACHED"
               : "add new lamp"}
           </Button>
@@ -219,7 +217,7 @@ const CreateMapping = () => {
                 ? true
                 : false ||
                   bulbIdList.length < currentLampId ||
-                  Object.keys(bulbIdList).length <= markers.length
+                  maxBulbIdLength <= markers.length
             }
             onClick={() => actionHandler("addLampBeforeActive")}
             style={{
@@ -231,7 +229,7 @@ const CreateMapping = () => {
               marginRight: "20px",
             }}
           >
-            {Object.keys(bulbIdList).length <= markers.length
+            {maxBulbIdLength <= markers.length
               ? "MAX BULBS REACHED"
               : " Add before selected Lamp"}
           </Button>
@@ -267,6 +265,7 @@ const CreateMapping = () => {
           >
             Vertical Scan
           </Button>
+
           <Button
             size="large"
             variant="outlined"
@@ -285,6 +284,14 @@ const CreateMapping = () => {
           </Button>
         </div>
         <div className="mapOps">
+          <div
+            style={{
+              position: "absolute",
+            }}
+          >
+            <QuestionMark story="mapManager" />
+          </div>
+
           <div>Map Manager:</div>
 
           {/* <TextField value={textValue} onChange={inputText}></TextField> */}

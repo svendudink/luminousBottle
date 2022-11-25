@@ -13,7 +13,7 @@ import AndroidServerStatus from "../components/AndroidServerStatus";
 import Switch from "@mui/material/Switch";
 import FormControlLabel from "@mui/material";
 import { Slider } from "@mui/material";
-
+import QuestionMark from "../components/QuestionMark";
 import FormGroup from "@mui/material";
 import { GlobalContext } from "../components/context/GlobalContext";
 import Draggable from "react-draggable";
@@ -36,8 +36,8 @@ const BasicController = () => {
 
   console.log(serverStatus);
 
-  const [bulbMovement, setBulbMovement] = useState("0");
-  const [bulbColours, setbulbColours] = useState("0");
+  const [bulbMovement, setBulbMovement] = useState("2");
+  const [bulbColours, setbulbColours] = useState("1");
   const [mapping, setMapping] = useState(`Empty`);
   const [liveVideo, setLiveVideo] = useState("");
   const [eventsDisabled, setEventsDisabled] = useState(false);
@@ -77,9 +77,9 @@ const BasicController = () => {
       }",mapping: "${mapping}", readFileFromAndroid: "${
         e.target.id === "2" ? true : false
       }", bulbMovement: "${
-        bulbMovement === "0" ? "0" : bulbMovement.target.value
+        bulbMovement === "2" ? "2" : bulbMovement.target.value
       }", bulbColours: "${
-        bulbColours === "0" ? "0" : bulbColours.target.value
+        bulbColours === "1" ? "1" : bulbColours.target.value
       }"}){notDefined}}`,
     };
 
@@ -224,13 +224,13 @@ const BasicController = () => {
             <Select
               labelId="demo-select-small"
               id="demo-select-small"
-              value={bulbMovement === "0" ? "0" : bulbMovement.target.value}
+              value={bulbMovement === "2" ? "2" : bulbMovement.target.value}
               label="Bulb travel pattern"
               onChange={setBulbMovement}
             >
               <MenuItem value=""></MenuItem>
+              <MenuItem value={"2"}>Up and down</MenuItem>
               <MenuItem value={"0"}>Breathing whole group</MenuItem>
-              <MenuItem value={"2"}>Up and down random</MenuItem>
               <MenuItem value={"1"}>Fully random</MenuItem>
             </Select>
           </FormControl>
@@ -239,13 +239,13 @@ const BasicController = () => {
             <Select
               labelId="demo-select-small"
               id="demo-select-small"
-              value={bulbColours === "0" ? "0" : bulbColours.target.value}
+              value={bulbColours === "1" ? "1" : bulbColours.target.value}
               label="Bulb travel pattern"
               onChange={setbulbColours}
             >
               <MenuItem value=""></MenuItem>
               <MenuItem value={"0"}>Full random colours</MenuItem>
-              <MenuItem value={"1"}>Specified colours, set in backend</MenuItem>
+              <MenuItem value={"1"}>Specified colours</MenuItem>
             </Select>
           </FormControl>
           <FormControl sx={{ m: 1, minWidth: 120 }} size="small">

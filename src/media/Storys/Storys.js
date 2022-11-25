@@ -1,8 +1,8 @@
 import { Button } from "@mui/material";
 import { useContext, useState } from "react";
-import { GlobalContext } from "../../../components/context/GlobalContext";
+import { GlobalContext } from "../../components/context/GlobalContext";
 import TextareaAutosize from "@mui/base/TextareaAutosize";
-import "./Storys.css"
+import "./Storys.css";
 
 const Storys = (props) => {
   const { setLampBackground } = useContext(GlobalContext);
@@ -50,11 +50,30 @@ const Storys = (props) => {
       </div>
     );
   }
+
   if (props.story === "lamp4") {
     return (
       <div style={{ color: textColor }}>
         Bulbs are all controlled from 1 Rooted android device, which is in turn
         controlled by the NodeJS server
+      </div>
+    );
+  }
+  if (props.story === "mapManager") {
+    return (
+      <div style={{ color: "black" }}>
+        Create your own event map <br></br>
+        this will be the first step setting up a light event
+      </div>
+    );
+  }
+  if (props.story === "colors") {
+    return (
+      <div style={{ color: "black" }}>
+        Select different colors, <br></br>if no colors are selected, its will
+        pick a random color,<br></br> if one color is selected, it will remain
+        on that color, <br></br> if multiple colors are selected it will
+        randomly rotate <br></br>in between the colors selected
       </div>
     );
   }
