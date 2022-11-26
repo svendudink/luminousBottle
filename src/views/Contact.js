@@ -9,7 +9,7 @@ const About = () => {
   const { setActivePage } = useContext(GlobalContext);
 
   useEffect(() => {
-    setActivePage("about");
+    setActivePage("Contact");
     document.title = "Bottle Luminous: About";
   });
 

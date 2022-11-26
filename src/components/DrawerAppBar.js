@@ -14,18 +14,50 @@ import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import { UserContext } from "./context/UserContext";
+
+import { useState, useEffect, useContext } from "react";
+import QuestionMark from "./QuestionMark";
 
 const drawerWidth = 240;
-const navItems = [
-  "Home",
-  "Live video demo and device control",
-  "Create event map",
-  "about this project",
-  "Showroom",
-  "Contact",
-];
+
+// const navItems = [
+//   "Home",
+//   "Live video demo and device control",
+//   "Create event map",
+//   "about this project",
+//   "Showroom",
+//   "Contact",
+//   loginLogout(),
+// ];
 
 export default function DrawerAppBar(props) {
+  const { loggedIn, setLoggedIn } = useContext(UserContext);
+
+  const [navItems, setNavItems] = useState([
+    "Home",
+    "Live video demo and device control",
+    "Create event map",
+    "about this project",
+    "Showroom",
+    "Contact",
+    loggedIn ? "Logout" : "Login or create a user",
+  ]);
+
+  useEffect(() => {
+    setNavItems([
+      "Home",
+      "Live video demo and device control",
+      "Create event map",
+      "about this project",
+      "Showroom",
+      "Contact",
+      loggedIn ? "Logout" : "Login or create a user",
+    ]);
+
+    if (loggedIn) navigate("/BasicController");
+  }, [loggedIn]);
+
   const { window } = props;
   const [mobileOpen, setMobileOpen] = React.useState(false);
   const navigate = useNavigate();
@@ -49,6 +81,11 @@ export default function DrawerAppBar(props) {
     setMobileOpen(!mobileOpen);
   };
 
+  const logout = () => {
+    localStorage.removeItem("token");
+    setLoggedIn(false);
+  };
+
   const handleClick = (event) => {
     if (event === navItems[0]) {
       navigate("/Home");
@@ -68,6 +105,9 @@ export default function DrawerAppBar(props) {
     }
     if (event === navItems[5]) {
       navigate("/contact");
+    }
+    if (event === navItems[6]) {
+      loggedIn ? logout() : navigate("/LoginCreateUser");
     }
   };
 

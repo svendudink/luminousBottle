@@ -20,6 +20,9 @@ import Contact from "./views/Contact";
 import { GlobalContext } from "./components/context/GlobalContext";
 import { Showroom } from "./views/Showroom";
 import { IoContextProvider } from "./components/context/IoConnectContext";
+import { UserContext } from "./components/context/UserContext";
+import LoginCreateUser from "./views/LoginCreateUser.js";
+import { getToken } from "./Helpers/getToken";
 
 /////////////////////////////////////Sven's//Coding/ Date: 17-10-2022 15:27 ////////////
 // Load images for showroom carousel
@@ -44,6 +47,23 @@ function BackgroundLayer() {
 
   const { lampBackGround, setLampBackground, activePage } =
     useContext(GlobalContext);
+  const { setLoggedIn } = useContext(UserContext);
+
+  const [user, setUser] = useState(false);
+
+  const checkIfUserIsLoggedIn = () => {
+    const token = getToken();
+    if (token) {
+      console.log("logged in");
+      setLoggedIn(true);
+    } else {
+      console.log("not logged");
+      setLoggedIn(false);
+    }
+  };
+  useEffect(() => {
+    checkIfUserIsLoggedIn();
+  }, [user]);
 
   const preloadSrcList = [
     startPagewhitea,
@@ -148,8 +168,9 @@ function BackgroundLayer() {
     url(${preloadSrcList[background]})`
               : `url(${preloadSrcList[background]})`,
           backgroundSize: "cover",
+          backgroundAttachment: "fixed",
           width: "100vw",
-          height: "100vh",
+          height: "100%",
           transition: "0.8s ease",
         }}
       >
@@ -171,6 +192,7 @@ function BackgroundLayer() {
           <Route path="/About" element={<About />} />
           <Route path="/Showroom" element={<Showroom />} />
           <Route path="/Contact" element={<Contact />} />
+          <Route path="/LoginCreateUser" element={<LoginCreateUser />} />
         </Routes>
       </div>
     </BrowserRouter>

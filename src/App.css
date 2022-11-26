@@ -7,10 +7,11 @@
     url("./media/background/IMG_7159.JPG");
 
   background-size: cover;
+  background-attachment: fixed;
+
   width: 100vw;
   height: 100vh;
 }
-
 
 /* .App-logo {
   height: 40vmin;

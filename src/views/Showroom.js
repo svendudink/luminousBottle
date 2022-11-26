@@ -131,7 +131,7 @@ export const Showroom = () => {
         <Button onClick={() => setActiveCarousel("preproductionpics")}>
           Production fotos
         </Button>
-        <Button onClick={() => setActiveCarousel("preproductionvideos")}>
+        {/* <Button onClick={() => setActiveCarousel("preproductionvideos")}>
           Production videos
         </Button>
         <Button onClick={() => setActiveCarousel("castlepics")}>
@@ -145,7 +145,7 @@ export const Showroom = () => {
         </Button>
         <Button onClick={() => setActiveCarousel("brandenburgvideos")}>
           Brandenburg Burn videos
-        </Button>
+        </Button> */}
       </div>
     </div>
   );

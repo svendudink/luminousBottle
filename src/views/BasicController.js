@@ -18,6 +18,7 @@ import FormGroup from "@mui/material";
 import { GlobalContext } from "../components/context/GlobalContext";
 import Draggable from "react-draggable";
 import image from "../media/Untitled-fococlipping-standard.png";
+import { UserContext } from "../components/context/UserContext";
 
 import { ioContext } from "../components/context/IoConnectContext";
 import Video from "../components/Video";
@@ -31,6 +32,7 @@ const BasicController = () => {
     selectServer,
     setSelectServer,
   } = useContext(GlobalContext);
+  const { loggedIn } = useContext(UserContext);
 
   const { serverStatus } = useContext(ioContext);
 
@@ -93,6 +95,24 @@ const BasicController = () => {
         console.log(resData);
       });
   };
+  /////////////////////////////////////Sven's//Coding/ Date: 26-11-2022 16:44 ////////////
+  // Demo mode
+  /////////////////////////////////////////gnidoC//s'nevS////////////////////////////////
+  useEffect(() => {
+    if (!loggedIn) {
+      GraphQLHandler(
+        0,
+        "center.lat",
+        "center.lng",
+        "directEvent",
+        "textValue",
+        "none",
+        "none",
+        "enableDirectControl"
+      );
+      setLightDisabled(false);
+    }
+  }, [loggedIn]);
 
   /////////////////////////////////////Sven's//Coding/ Date: 18-10-2022 12:27 ////////////
   // Pre Alpha functionality
@@ -198,7 +218,7 @@ const BasicController = () => {
       "directEvent",
       "textValue",
       "none",
-      currentBrightness,
+      currentBrightness === 0 ? 1 : currentBrightness,
       "brightness"
     );
     console.log(event);
@@ -206,125 +226,28 @@ const BasicController = () => {
 
   return (
     <div>
-      {preAlphaCheckBox && (
+      {loggedIn ? (
+        <div>You are Logged in, all functions are available</div>
+      ) : (
         <div>
-          <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-            <InputLabel id="demo-select-small">Bulb travel pattern</InputLabel>
-            <Select
-              labelId="demo-select-small"
-              id="demo-select-small"
-              value={bulbMovement === "2" ? "2" : bulbMovement.target.value}
-              label="Bulb travel pattern"
-              onChange={setBulbMovement}
-            >
-              <MenuItem value=""></MenuItem>
-              <MenuItem value={"2"}>Up and down</MenuItem>
-              <MenuItem value={"0"}>Breathing whole group</MenuItem>
-              <MenuItem value={"1"}>Fully random</MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-            <InputLabel id="demo-select-small">Bulb Colours</InputLabel>
-            <Select
-              labelId="demo-select-small"
-              id="demo-select-small"
-              value={bulbColours === "1" ? "1" : bulbColours.target.value}
-              label="Bulb travel pattern"
-              onChange={setbulbColours}
-            >
-              <MenuItem value=""></MenuItem>
-              <MenuItem value={"0"}>Full random colours</MenuItem>
-              <MenuItem value={"1"}>Specified colours</MenuItem>
-            </Select>
-          </FormControl>
-          <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
-            <InputLabel id="demo-select-small">Mapping</InputLabel>
-            <Select
-              labelId="demo-select-small"
-              id="demo-select-small"
-              value={mapping}
-              label="Mapping"
-              onChange={(e) => {
-                setMapping(e.target.value);
-              }}
-            >
-              <MenuItem key={Math.random()} value="Empty">
-                Select
-              </MenuItem>
-              {filteredEventList.map((option) => {
-                return (
-                  <MenuItem key={Math.random()} value={option.name}>
-                    {option.name}
-                  </MenuItem>
-                );
-              })}{" "}
-            </Select>
-          </FormControl>
-
-          <br></br>
-          <br></br>
-          <Button
-            disabled={mapping === "Empty" ? true : false}
-            id={1}
-            onClick={clickHandler}
-            variant="contained"
-          >
-            Create LightFile
-          </Button>
-          <br></br>
-          <br></br>
-          <Button
-            disabled={eventsDisabled}
-            id={0}
-            onClick={clickHandler}
-            variant="contained"
-          >
-            send to phone and start event
-          </Button>
-          <br></br>
-          <br></br>
-          <div></div>
+          Register and login to unlock map building, in demo mode only direct
+          control is available
         </div>
       )}
-      {/* /////////////////////////////////////Sven's//Coding/ Date: 18-10-2022 12:35 ////////////  
-       //  Pre Alpha
-       /////////////////////////////////////////gnidoC//s'nevS//////////////////////////////// */}
-      {preAlphaCheckBox && (
-        <div>
-          <div
-            style={{
-              borderTop: "2px solid #fff ",
-              marginLeft: 20,
-              marginRight: 20,
-              marginTop: 30,
-            }}
-          >
-            Connection time to lights might take upto 3-4 minutes, this is due
-            to the many bluetooth devices in the area and the lamps all being
-            positioned in the range of the main controller, in real live
-            situations this is not the case and therefore this will not be fixed
-          </div>
+      <Video />
+      <div
+        style={{
+          borderTop: "2px solid #fff ",
+          marginLeft: 20,
+          marginRight: 20,
+          marginTop: 30,
+        }}
+      >
+        {" "}
+        {/* Direct control */}
+        <div className="directControl">
           <div>
-            <div
-              style={{
-                borderTop: "2px solid #fff ",
-                marginLeft: 20,
-                marginRight: 20,
-                marginTop: 30,
-              }}
-            ></div>
-            <AndroidServerStatus />
-          </div>
-          <div
-            style={{
-              borderTop: "2px solid #fff ",
-              marginLeft: 20,
-              marginRight: 20,
-              marginTop: 30,
-            }}
-          >
-            {" "}
-            <Switch onChange={directControl} />
+            <Switch disabled={!loggedIn} onChange={directControl} />
             Enable direct control of lights, this will stop any running event
             and will need to wait for reconnect
           </div>
@@ -353,7 +276,7 @@ const BasicController = () => {
             BLUE
           </Button>
           <br></br>
-          Off
+          1%
           <Slider
             size="large"
             value={Number(currentBrightness)}
@@ -386,17 +309,128 @@ const BasicController = () => {
               }}
             ></div>
           </div>
-          <div>
-            <div>
-              <Draggable>
-                <div>
-                  <Video />
-                </div>
-              </Draggable>
-            </div>
-          </div>
+          {/* end of Direct control */}
         </div>
-      )}
+      </div>
+      {/* Event control */}
+      <div>
+        <br />
+        <FormControl
+          disabled={!loggedIn}
+          sx={{ m: 1, minWidth: 120 }}
+          size="small"
+        >
+          <InputLabel id="demo-select-small">Bulb travel pattern</InputLabel>
+          <Select
+            labelId="demo-select-small"
+            id="demo-select-small"
+            value={bulbMovement === "2" ? "2" : bulbMovement.target.value}
+            label="Bulb travel pattern"
+            onChange={setBulbMovement}
+          >
+            <MenuItem value=""></MenuItem>
+            <MenuItem value={"2"}>Up and down</MenuItem>
+            <MenuItem value={"0"}>Breathing whole group</MenuItem>
+            <MenuItem value={"1"}>Fully random</MenuItem>
+          </Select>
+        </FormControl>
+        <FormControl
+          disabled={!loggedIn}
+          sx={{ m: 1, minWidth: 120 }}
+          size="small"
+        >
+          <InputLabel id="demo-select-small">Bulb Colours</InputLabel>
+          <Select
+            labelId="demo-select-small"
+            id="demo-select-small"
+            value={bulbColours === "1" ? "1" : bulbColours.target.value}
+            label="Bulb travel pattern"
+            onChange={setbulbColours}
+          >
+            <MenuItem value=""></MenuItem>
+            <MenuItem value={"0"}>Full random colours</MenuItem>
+            <MenuItem value={"1"}>Specified colours</MenuItem>
+          </Select>
+        </FormControl>
+        <FormControl
+          disabled={!loggedIn}
+          sx={{ m: 1, minWidth: 120 }}
+          size="small"
+        >
+          <InputLabel id="demo-select-small">Mapping</InputLabel>
+          <Select
+            labelId="demo-select-small"
+            id="demo-select-small"
+            value={mapping}
+            label="Mapping"
+            onChange={(e) => {
+              setMapping(e.target.value);
+            }}
+          >
+            <MenuItem key={Math.random()} value="Empty">
+              Select
+            </MenuItem>
+            {filteredEventList.map((option) => {
+              return (
+                <MenuItem key={Math.random()} value={option.name}>
+                  {option.name}
+                </MenuItem>
+              );
+            })}{" "}
+          </Select>
+        </FormControl>
+        <br></br>
+        <br></br>
+        <Button
+          disabled={mapping === "Empty" ? true : false}
+          id={1}
+          onClick={clickHandler}
+          variant="contained"
+        >
+          Create LightFile
+        </Button>
+        <br></br>
+        <br></br>
+        <Button
+          disabled={!loggedIn || eventsDisabled ? true : false}
+          id={0}
+          onClick={clickHandler}
+          variant="contained"
+        >
+          send to phone and start event
+        </Button>
+        <br></br>
+        <br></br>
+        <div></div>
+      </div>
+      {/* end of Event control */}
+
+      <div>
+        <div
+          style={{
+            borderTop: "2px solid #fff ",
+            marginLeft: 20,
+            marginRight: 20,
+            marginTop: 30,
+          }}
+        >
+          Connection time to lights might take upto 3-4 minutes, this is due to
+          the many bluetooth devices in the area and the lamps all being
+          positioned in the range of the main controller, in real live
+          situations this is not the case and therefore this will not be fixed
+        </div>
+        <div>
+          <div
+            style={{
+              borderTop: "2px solid #fff ",
+              marginLeft: 20,
+              marginRight: 20,
+              marginTop: 30,
+            }}
+          ></div>
+          <AndroidServerStatus />
+        </div>
+      </div>
     </div>
   );
 };

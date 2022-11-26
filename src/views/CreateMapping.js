@@ -1,5 +1,5 @@
 import GoogleMap from "../components/Map";
-import { useReducer, useContext, useEffect } from "react";
+import { useReducer, useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../components/context/GlobalContext";
 import { TextField } from "@mui/material";
 import Popup from "../components/Popup";
@@ -66,6 +66,39 @@ const CreateMapping = () => {
   }
 
   const [, forceRerender] = useReducer((x) => x + 1, 0);
+
+  /////////////////////////////////////Sven's//Coding/ Date: 26-11-2022 10:50 ////////////
+  // Search functionality for map
+  /////////////////////////////////////////gnidoC//s'nevS////////////////////////////////
+  const [searchInput, setSearchInput] = useState("");
+
+  const searchText = (e) => {
+    setSearchInput(e.target.value);
+  };
+
+  const searchMap = async (search) => {
+    let response = await fetch(
+      `https://maps.googleapis.com/maps/api/geocode/json?address=${searchInput}%2015&key=AIzaSyD2ZcdhauruGPbtzIEqEMPWERuq9x8FVxA`
+    );
+
+    if (response.ok) {
+      // if HTTP-status is 200-299
+      // get the response body (the method explained below)
+      let json = await response.json();
+      console.log(
+        json.results[0].geometry.location.lat,
+        json.results[0].geometry.location.lng
+      );
+      setCenterOption("search");
+      setCenter({
+        lat: json.results[0].geometry.location.lat,
+        lng: json.results[0].geometry.location.lng,
+      });
+      setSearchInput("");
+    } else {
+      alert("HTTP-Error: " + response.status);
+    }
+  };
 
   /////////////////////////////////////Sven's//Coding/ Date: 17-10-2022 15:48 ////////////
   // Dropdown menu
@@ -322,6 +355,15 @@ const CreateMapping = () => {
       <div className="main">
         <div className="map">
           <div>
+            <div>
+              <TextField
+                id="outlined-helperText"
+                label="Search"
+                value={searchInput}
+                onChange={searchText}
+              />
+              <Button onClick={() => searchMap()}>Search</Button>
+            </div>
             Legenda:{"        "}
             <img
               src={
@@ -375,6 +417,7 @@ const CreateMapping = () => {
             />{" "}
             = Lamp is set to multiColor
           </div>
+
           <GoogleMap />
         </div>
         <div className="enhancedTable">
