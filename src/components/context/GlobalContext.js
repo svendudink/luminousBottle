@@ -26,7 +26,7 @@ export const GlobalContextProvider = (props) => {
   const [selected, setSelected] = useState([]);
   const [infoVisibility, setInfoVisibility] = useState("hidden");
   const [lampBackGround, setLampBackground] = useState("startPagewhitea");
-  const [selectServer, setSelectServer] = useState("localhost");
+  const [selectServer, setSelectServer] = useState("bottle.hopto.org");
   const [selectedColors, setSelectedColors] = useState([]);
   const [maxBulbIdLength, setMaxBulbIdLength] = useState(14);
   const [filteredEventList, setFilteredEventList] = useState([
