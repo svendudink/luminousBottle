@@ -62,6 +62,7 @@ const Storys = (props) => {
   if (props.story === "mapManager") {
     return (
       <div style={{ color: "black" }}>
+        Select a map to change the colors or<br></br>
         Create your own event map <br></br>
         this will be the first step setting up a light event
       </div>
@@ -70,10 +71,55 @@ const Storys = (props) => {
   if (props.story === "colors") {
     return (
       <div style={{ color: "black" }}>
-        Select different colors, <br></br>if no colors are selected, its will
-        pick a random color,<br></br> if one color is selected, it will remain
-        on that color, <br></br> if multiple colors are selected it will
-        randomly rotate <br></br>in between the colors selected
+        Select different colors, <br></br>if no colors are selected,
+        <br /> its will pick a random color,
+        <br /> if one color is selected,
+        <br /> it will remain on that color,
+        <br /> if multiple colors are selected
+        <br /> it will randomly rotate
+        <br /> in between the colors selected
+      </div>
+    );
+  }
+  if (props.story === "bulbId") {
+    return (
+      <div style={{ color: "black" }}>
+        Every Lamp has its own Bulb ID.
+        <br /> on the neck of the lamp you can find a QR code,
+        <br /> scan the QR code or select the bulb manually, <br />
+        this is done so the software knows
+        <br /> where your bulb is placed and when to <br />
+        perform the action requested
+      </div>
+    );
+  }
+
+  if (props.story === "googleMap") {
+    return (
+      <div style={{ color: "black" }}>
+        Bulbs who are added will be visible here,
+        <br /> simply click on a bulb to give it a<br /> color or drag it to the
+        position matching the position
+        <br /> of the physical bulb
+      </div>
+    );
+  }
+  if (props.story === "addLamp") {
+    return (
+      <div style={{ color: "black" }}>
+        Add new Lamp: Add a lamp and it will be visible on the map,
+        <br />
+        Add before selected lamp: there will always be chronoligical order,{" "}
+        <br />
+        this makes it possible to add a lamp later without deleting a bunch of
+        lights
+        <br />
+        Delete selected Lamp: this will delete the selected and move all
+        <br />
+        numbers down by one to keepthe chronological order <br /> Vertical and
+        horizontal scan: have the lights move from left to right or from up to
+        <br />
+        down
       </div>
     );
   }

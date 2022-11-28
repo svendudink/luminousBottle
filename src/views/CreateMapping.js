@@ -9,6 +9,7 @@ import Button from "@mui/material/Button";
 import IconMenu from "../components/IconMenu";
 import QuestionMark from "../components/QuestionMark";
 import { Image } from "react-bootstrap";
+import "./CreateMapping.css";
 
 const Toolbar = () => {
   return <div className="head"></div>;
@@ -39,6 +40,7 @@ const CreateMapping = () => {
     setZoom,
     setActivePage,
     maxBulbIdLength,
+    demo,
   } = useContext(GlobalContext);
 
   /////////////////////////////////////Sven's//Coding/ Date: 17-10-2022 15:40 ////////////
@@ -52,7 +54,8 @@ const CreateMapping = () => {
 
   useEffect(() => {
     setMap(null);
-
+    if (activeMap === "AlexanderPlatz Demo")
+      GraphQLHandler(0, 0, 0, "load", "AlexanderPlatz Demo");
     if (activeMap !== "(Select)") {
       setCenterOption("firstMarker");
     }
@@ -145,6 +148,15 @@ const CreateMapping = () => {
     console.log(currentLampId);
     let findMiddle = false;
 
+    if (
+      action === "deleteActive" ||
+      (action === "addLampBeforeActive" && activeMap.includes(demo))
+    ) {
+      window.alert(
+        "Cant delete lamps on Demo events, your are limited to brightness and color change,feel free to create your own event, ofcourse you can delete lamps on your own event"
+      );
+      return;
+    }
     if (action === "deleteActive" && markers.length <= currentLampId) {
       console.log("checked");
       setCurrentLampId(currentLampId - 1);
@@ -176,6 +188,13 @@ const CreateMapping = () => {
   };
 
   let addNewLampHandler = async () => {
+    console.log("addnewlamp", demo, activeMap, activeMap.includes(demo));
+    if (activeMap.includes(demo)) {
+      window.alert(
+        "Cant add lamps on Demo events,your are limited to brightness and color change, feel free to create your own event, ofcourse you can add lamps on your own event"
+      );
+      return;
+    }
     setCenterOption("mapCenter");
     setCenter({
       lat: map.center.lat(),
@@ -201,20 +220,264 @@ const CreateMapping = () => {
   };
 
   const deleteMap = () => {
-    setMarkers([]);
-    GraphQLHandler("id", "lat", "lng", "delete", activeMap);
-    let temp;
-    temp = filteredEventList.filter((e) => {
-      return e.name !== activeMap;
-    });
-    setFilteredEventList(temp);
-    setActiveMap("(Select)");
+    if (activeMap.includes(demo)) {
+      window.alert(
+        "Cant delete Demo events, your are limited to brightness and color change, feel free to create your own event, ofcourse you can delete it afterwards"
+      );
+    } else {
+      setMarkers([]);
+      GraphQLHandler("id", "lat", "lng", "delete", activeMap);
+      let temp;
+      temp = filteredEventList.filter((e) => {
+        return e.name !== activeMap;
+      });
+      setFilteredEventList(temp);
+      setActiveMap("(Select)");
+    }
   };
 
   return (
-    <div className="main">
-      <Toolbar />
-      <div className="headgrid">
+    <div className="tenKField">
+      <div className="googleMap">
+        <div style={{ paddingRight: "800px" }}>
+          <QuestionMark
+            size={{ height: "190px", width: "200px" }}
+            story="googleMap"
+          />
+        </div>
+        <GoogleMap />
+      </div>
+      <div
+        className="iconMenu"
+        style={{
+          visibility: `${bulbConfiguratorVisibility}`,
+        }}
+      >
+        <IconMenu id={currentLampId} bulbIdList={bulbIdList} />
+      </div>
+      <div className="addLampContainer">
+        <div className="addLamp">
+          <QuestionMark
+            size={{ height: "150px", width: "600px" }}
+            story="addLamp"
+          />
+          <Button
+            size="large"
+            variant="outlined"
+            disabled={
+              activeMap === "(Select)" || maxBulbIdLength <= markers.length
+            }
+            onClick={() => addNewLampHandler()}
+            style={{
+              maxWidth: "300px",
+              maxHeight: "300px",
+              minWidth: "30px",
+              minHeight: "30px",
+              marginTop: "20px",
+              marginRight: "20px",
+              marginLeft: "10px",
+            }}
+          >
+            {maxBulbIdLength <= markers.length
+              ? "MAX BULBS REACHED"
+              : "add new lamp"}
+          </Button>
+          <Button
+            size="large"
+            variant="outlined"
+            disabled={
+              currentLampId === 0
+                ? true
+                : false ||
+                  bulbIdList.length < currentLampId ||
+                  maxBulbIdLength <= markers.length
+            }
+            onClick={() => actionHandler("addLampBeforeActive")}
+            style={{
+              maxWidth: "300px",
+              maxHeight: "300px",
+              minWidth: "30px",
+              minHeight: "30px",
+              marginLeft: "20px",
+              marginRight: "20px",
+              marginTop: "20px",
+            }}
+          >
+            {maxBulbIdLength <= markers.length
+              ? "MAX BULBS REACHED"
+              : " Add before selected Lamp"}
+          </Button>
+          <Button
+            size="large"
+            variant="outlined"
+            disabled={currentLampId === 0 ? true : false}
+            onClick={() => actionHandler("deleteActive")}
+            style={{
+              maxWidth: "300px",
+              maxHeight: "300px",
+              minWidth: "30px",
+              minHeight: "30px",
+              marginLeft: "20px",
+              marginRight: "20px",
+              marginTop: "20px",
+            }}
+          >
+            Delete Selected Lamp
+          </Button>
+
+          <Button
+            size="large"
+            variant="outlined"
+            disabled={activeMap === "(Select)" || markers.length < 2}
+            onClick={() => actionHandler("verticalScan")}
+            style={{
+              maxWidth: "300px",
+              maxHeight: "300px",
+              minWidth: "30px",
+              minHeight: "30px",
+              marginLeft: "20px",
+              marginRight: "20px",
+              marginTop: "20px",
+            }}
+          >
+            Vertical Scan
+          </Button>
+
+          <Button
+            size="large"
+            variant="outlined"
+            disabled={activeMap === "(Select)" || markers.length < 2}
+            onClick={() => actionHandler("horizontalScan")}
+            style={{
+              maxWidth: "300px",
+              maxHeight: "300px",
+              minWidth: "30px",
+              minHeight: "30px",
+              marginLeft: "20px",
+              marginRight: "20px",
+              marginTop: "20px",
+            }}
+          >
+            Horizontal Scan
+          </Button>
+        </div>
+      </div>
+      <div className="mapManager">
+        <div className="mapOps">
+          <div
+            style={{
+              position: "absolute",
+            }}
+          >
+            <QuestionMark
+              size={{ height: "100px", width: "200px" }}
+              story="mapManager"
+            />
+          </div>
+          <div>Map Manager:</div>
+
+          <TextField
+            id="outlined-helperText"
+            label="New map name:"
+            value={textValue}
+            onChange={inputText}
+          />
+          <Button onClick={() => createNewMap()}>Add new map</Button>
+          <div>
+            <Dropdown
+              label="Event name:"
+              options={filteredEventList}
+              value={activeMap}
+              onChange={dropdownHandleChange}
+            />
+          </div>
+          <Button
+            onClick={deleteMap}
+            disabled={activeMap === "(Select)" ? true : false}
+          >
+            Delete map
+          </Button>
+        </div>
+      </div>
+      <div className="legendaContainer">
+        <div className="legenda">
+          <div style={{ position: "left" }}></div>
+          <div>
+            <TextField
+              id="outlined-helperText"
+              label="Search"
+              value={searchInput}
+              onChange={searchText}
+            />
+            <Button onClick={() => searchMap()}>Search</Button>
+          </div>
+          Legenda:{"        "}
+          <img
+            src={
+              "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_black.png"
+            }
+            alt={"none"}
+          />
+          = Turned of.{"     "}
+          <img
+            src={
+              "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_red.png"
+            }
+            alt={"none"}
+          />
+          <img
+            src={
+              "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_green.png"
+            }
+            alt={"none"}
+          />
+          <img
+            src={
+              "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_blue.png"
+            }
+            alt={"none"}
+          />
+          <img
+            src={
+              "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_orange.png"
+            }
+            alt={"none"}
+          />
+          <img
+            src={
+              "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_yellow.png"
+            }
+            alt={"none"}
+          />
+          <img
+            src={
+              "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_purple.png"
+            }
+            alt={"none"}
+          />
+          = Color of lamp
+          <img
+            src={
+              "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_white.png"
+            }
+            alt={"none"}
+          />{" "}
+          = Lamp is set to multiColor
+        </div>
+      </div>
+      <div className="enhancedTableContainer">
+        <div className="enhancedTable">
+          <EnhancedTable />{" "}
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default CreateMapping;
+
+/* <Toolbar />
+      <div>
         <div
           className="iconMenu"
           style={{
@@ -328,105 +591,101 @@ const CreateMapping = () => {
 
           <div>Map Manager:</div>
 
-          {/* <TextField value={textValue} onChange={inputText}></TextField> */}
-          <TextField
-            id="outlined-helperText"
-            label="New map name:"
-            value={textValue}
-            onChange={inputText}
-          />
-          <Button onClick={() => createNewMap()}>Add new map</Button>
-          <div>
-            <Dropdown
-              label="Event name:"
-              options={filteredEventList}
-              value={activeMap}
-              onChange={dropdownHandleChange}
-            />
-          </div>
-          <Button
-            onClick={deleteMap}
-            disabled={activeMap === "(Select)" ? true : false}
-          >
-            Delete map
-          </Button>
-        </div>
-      </div>
-      <div className="main">
-        <div className="map">
-          <div>
-            <div>
-              <TextField
-                id="outlined-helperText"
-                label="Search"
-                value={searchInput}
-                onChange={searchText}
-              />
-              <Button onClick={() => searchMap()}>Search</Button>
-            </div>
-            Legenda:{"        "}
-            <img
-              src={
-                "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_black.png"
-              }
-              alt={"none"}
-            />
-            = Turned of.{"     "}
-            <img
-              src={
-                "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_red.png"
-              }
-              alt={"none"}
-            />
-            <img
-              src={
-                "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_green.png"
-              }
-              alt={"none"}
-            />
-            <img
-              src={
-                "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_blue.png"
-              }
-              alt={"none"}
-            />
-            <img
-              src={
-                "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_orange.png"
-              }
-              alt={"none"}
-            />
-            <img
-              src={
-                "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_yellow.png"
-              }
-              alt={"none"}
-            />
-            <img
-              src={
-                "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_purple.png"
-              }
-              alt={"none"}
-            />
-            = Color of lamp
-            <img
-              src={
-                "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_white.png"
-              }
-              alt={"none"}
-            />{" "}
-            = Lamp is set to multiColor
-          </div>
+          {/* <TextField value={textValue} onChange={inputText}></TextField> */
 
-          <GoogleMap />
-        </div>
-        <div className="enhancedTable">
-          <EnhancedTable />
-        </div>
-      </div>
-      <Popup trigger={buttonPopup} />
-    </div>
-  );
-};
+//     <TextField
+//       id="outlined-helperText"
+//       label="New map name:"
+//       value={textValue}
+//       onChange={inputText}
+//     />
+//     <Button onClick={() => createNewMap()}>Add new map</Button>
+//     <div>
+//       <Dropdown
+//         label="Event name:"
+//         options={filteredEventList}
+//         value={activeMap}
+//         onChange={dropdownHandleChange}
+//       />
+//     </div>
+//     <Button
+//       onClick={deleteMap}
+//       disabled={activeMap === "(Select)" ? true : false}
+//     >
+//       Delete map
+//     </Button>
+//   </div>
+// </div>
+// <div className="main">
+//   <div className="map">
+//     <div>
+//       <div>
+//         <TextField
+//           id="outlined-helperText"
+//           label="Search"
+//           value={searchInput}
+//           onChange={searchText}
+//         />
+//         <Button onClick={() => searchMap()}>Search</Button>
+//       </div>
+//       Legenda:{"        "}
+//       <img
+//         src={
+//           "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_black.png"
+//         }
+//         alt={"none"}
+//       />
+//       = Turned of.{"     "}
+//       <img
+//         src={
+//           "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_red.png"
+//         }
+//         alt={"none"}
+//       />
+//       <img
+//         src={
+//           "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_green.png"
+//         }
+//         alt={"none"}
+//       />
+//       <img
+//         src={
+//           "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_blue.png"
+//         }
+//         alt={"none"}
+//       />
+//       <img
+//         src={
+//           "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_orange.png"
+//         }
+//         alt={"none"}
+//       />
+//       <img
+//         src={
+//           "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_yellow.png"
+//         }
+//         alt={"none"}
+//       />
+//       <img
+//         src={
+//           "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_purple.png"
+//         }
+//         alt={"none"}
+//       />
+//       = Color of lamp
+//       <img
+//         src={
+//           "https://raw.githubusercontent.com/Concept211/Google-Maps-Markers/master/images/marker_white.png"
+//         }
+//         alt={"none"}
+//       />{" "}
+//       = Lamp is set to multiColor
+//     </div>
 
-export default CreateMapping;
+//     <GoogleMap />
+//   </div>
+//   <div className="enhancedTable">
+//     <EnhancedTable />
+//   </div>
+// </div>
+// <Popup trigger={buttonPopup} />

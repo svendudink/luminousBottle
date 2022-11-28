@@ -41,8 +41,6 @@ const QuestionMark = (props) => {
     setText(name);
   };
 
-  console.log(mouseOver);
-
   return (
     <div>
       {mouseOver ? (

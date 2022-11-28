@@ -40,6 +40,7 @@ import lamp3d from "./media/background/IMG_7195.JPG";
 import lamp4a from "./media/background/IMG_7187.JPG";
 import lamp4b from "./media/background/IMG_7179.JPG";
 import otherPages from "./media/background/IMG_7179.JPG";
+import { isMobile } from "react-device-detect";
 
 function BackgroundLayer() {
   const [assetsLoaded, setAssetsLoaded] = useState(false);
@@ -50,6 +51,12 @@ function BackgroundLayer() {
   const { setLoggedIn } = useContext(UserContext);
 
   const [user, setUser] = useState(false);
+
+  if (isMobile) {
+    alert(
+      "This page is not build for phones, for the best experience, view on desktop"
+    );
+  }
 
   const checkIfUserIsLoggedIn = () => {
     const token = getToken();
@@ -162,7 +169,8 @@ function BackgroundLayer() {
               ? "none"
               : activePage !== "home"
               ? ` linear-gradient(
-      rgba(255, 255, 255, 0.95),
+      
+                rgba(255, 255, 255, 0.95),
       rgba(255, 255, 255, 0.8)
     ),
     url(${preloadSrcList[background]})`

@@ -133,6 +133,7 @@ const Marker = (options) => {
     setCenterOption,
     currentBrightness,
     setCurrentBrightness,
+    demo,
   } = useContext(GlobalContext);
 
   const [marker, setMarker] = React.useState();
@@ -163,8 +164,14 @@ const Marker = (options) => {
         const colors = markers[marker.index].colors;
         markers[marker.index] = { id, lat, lng, bulbId, brightness, colors };
 
-        setMarkers(markers);
-        GraphQLHandler(id, lat, lng, "update", activeMap);
+        if (activeMap.includes(demo)) {
+          window.alert(
+            "you Cant permanently change position of lamps on Demo events, you can change the colors and ofocurse you can make your own map where you can change the postions freely"
+          );
+        } else {
+          setMarkers(markers);
+          GraphQLHandler(id, lat, lng, "update", activeMap);
+        }
       });
     }
   }, [marker, options]);

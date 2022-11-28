@@ -1,7 +1,7 @@
 /////////////////////////////////////Sven's//Coding/ Date: 17-10-2022 15:33 ////////////
 // this view is the basic control for sending commands to the android device for writing the XML file to the device and set the specs
 /////////////////////////////////////////gnidoC//s'nevS////////////////////////////////
-
+import "./BasicController.css";
 import { Button } from "@mui/material";
 import { useState, useContext, useEffect, useRef } from "react";
 import InputLabel from "@mui/material/InputLabel";
@@ -19,11 +19,13 @@ import { GlobalContext } from "../components/context/GlobalContext";
 import Draggable from "react-draggable";
 import image from "../media/Untitled-fococlipping-standard.png";
 import { UserContext } from "../components/context/UserContext";
-
+import { useNavigate } from "react-router-dom";
 import { ioContext } from "../components/context/IoConnectContext";
 import Video from "../components/Video";
 
 const BasicController = () => {
+  const navigate = useNavigate();
+
   const {
     filteredEventList,
     GraphQLHandler,
@@ -223,34 +225,50 @@ const BasicController = () => {
     );
     console.log(event);
   };
+  /////////////////////////////////////Sven's//Coding/ Date: 27-11-2022 14:46 ////////////
+  // Scaling of website, possibly also doable with CSS, but as my interest in very little learning CSS,
+  // i prefer just to build a JS scaling
+  /////////////////////////////////////////gnidoC//s'nevS////////////////////////////////
 
   return (
-    <div>
-      {loggedIn ? (
-        <div>You are Logged in, all functions are available</div>
-      ) : (
-        <div>
-          Register and login to unlock map building, in demo mode only direct
-          control is available
-        </div>
-      )}
-      <Video />
-      <div
-        style={{
-          borderTop: "2px solid #fff ",
-          marginLeft: 20,
-          marginRight: 20,
-          marginTop: 30,
-        }}
-      >
-        {" "}
-        {/* Direct control */}
-        <div className="directControl">
-          <div>
-            <Switch disabled={!loggedIn} onChange={directControl} />
-            Enable direct control of lights, this will stop any running event
-            and will need to wait for reconnect
+    <div className="tenKFieldBasic">
+      <div className="video">
+        <Video />
+      </div>
+      <div className="welcome">
+        {loggedIn ? (
+          <div style={{ cursor: "pointer", color: "green", fontSize: 24 }}>
+            You are Logged in, all functions are available
           </div>
+        ) : (
+          <div
+            onClick={() => navigate("/LoginCreateUser")}
+            style={{ color: "red" }}
+          >
+            Register and login to unlock map building, in demo mode only direct
+            control is available
+          </div>
+        )}
+      </div>
+      <div className="directControl">
+        <div>
+          {loggedIn ? (
+            <div>
+              {lightDisabled
+                ? "Enable direct control of lights"
+                : "direct control is enabled, switch off to use the event build mode"}
+            </div>
+          ) : (
+            <div>Welcome to Demo mode, change the color and the brightness</div>
+          )}
+          {loggedIn ? (
+            <Switch disabled={!loggedIn} onChange={directControl} />
+          ) : (
+            ""
+          )}
+        </div>
+
+        <div style={{ paddingTop: "10px" }}>
           <Button
             id={0}
             onClick={() => directEventHandler("red")}
@@ -290,30 +308,9 @@ const BasicController = () => {
             }}
           />{" "}
           100%
-          <div
-            style={{
-              width: "150px",
-              position: "relative",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-          ></div>
-          <div>
-            <div
-              style={{
-                borderTop: "2px solid #fff ",
-                marginLeft: 20,
-                marginRight: 20,
-                marginTop: 30,
-              }}
-            ></div>
-          </div>
-          {/* end of Direct control */}
         </div>
       </div>
-      {/* Event control */}
-      <div>
+      <div className="buildEvent">
         <br />
         <FormControl
           disabled={!loggedIn}
@@ -403,36 +400,226 @@ const BasicController = () => {
         <br></br>
         <div></div>
       </div>
-      {/* end of Event control */}
 
-      <div>
-        <div
-          style={{
-            borderTop: "2px solid #fff ",
-            marginLeft: 20,
-            marginRight: 20,
-            marginTop: 30,
-          }}
-        >
-          Connection time to lights might take upto 3-4 minutes, this is due to
-          the many bluetooth devices in the area and the lamps all being
-          positioned in the range of the main controller, in real live
-          situations this is not the case and therefore this will not be fixed
-        </div>
-        <div>
-          <div
-            style={{
-              borderTop: "2px solid #fff ",
-              marginLeft: 20,
-              marginRight: 20,
-              marginTop: 30,
-            }}
-          ></div>
-          <AndroidServerStatus />
-        </div>
+      <div className="serverStatusMonitor">
+        <AndroidServerStatus />
       </div>
     </div>
   );
 };
 
 export default BasicController;
+
+//  const temp = (
+//    <div className="tenKField">
+//      {loggedIn ? (
+//        <div>You are Logged in, all functions are available</div>
+//      ) : (
+//       <div>
+//         Register and login to unlock map building, in demo mode only direct
+//         control is available
+//       </div>
+//     )}
+//     <div className="video">
+//       <Video />
+//     </div>
+//     <div
+//       style={{
+//         borderTop: "2px solid #fff ",
+//         marginLeft: 20,
+//         marginRight: 20,
+//         marginTop: 30,
+//       }}
+//     >
+//       {" "}
+//       {/* Direct control */}
+//   <div className="directControl">
+//     <div>
+//       <Switch disabled={!loggedIn} onChange={directControl} />
+//       Enable direct control of lights, this will stop any running event and
+//       will need to wait for reconnect
+//     </div>
+//     <Button
+//       id={0}
+//       onClick={() => directEventHandler("red")}
+//       variant="contained"
+//       disabled={lightDisabled}
+//     >
+//       RED
+//     </Button>
+//     <Button
+//       id={0}
+//       onClick={() => directEventHandler("green")}
+//       variant="contained"
+//       disabled={lightDisabled}
+//     >
+//       GREEN
+//     </Button>
+//     <Button
+//       id={0}
+//       onClick={() => directEventHandler("blue")}
+//       variant="contained"
+//       disabled={lightDisabled}
+//     >
+//       BLUE
+//     </Button>
+//     <br></br>
+//     1%
+//     <Slider
+//       size="large"
+//       value={Number(currentBrightness)}
+//       aria-label="Small"
+//       valueLabelDisplay="auto"
+//       onChange={brightnessHandler}
+//       onChangeCommitted={brightnessCommitHandler}
+//       disabled={lightDisabled}
+//       style={{
+//         width: "150px",
+//       }}
+//     />{" "}
+//     100%
+//     <div
+//       style={{
+//         width: "150px",
+//         position: "relative",
+//         display: "flex",
+//         justifyContent: "center",
+//         alignItems: "center",
+//       }}
+//     ></div>
+//     <div>
+//       <div
+//         style={{
+//           borderTop: "2px solid #fff ",
+//           marginLeft: 20,
+//           marginRight: 20,
+//           marginTop: 30,
+//         }}
+//       ></div>
+//     </div>
+//     {/* end of Direct control */}
+//   </div>
+// </div>
+//     {/* Event control */}
+//     <div>
+//       <br />
+//       <FormControl
+//         disabled={!loggedIn}
+//         sx={{ m: 1, minWidth: 120 }}
+//         size="small"
+//       >
+//         <InputLabel id="demo-select-small">Bulb travel pattern</InputLabel>
+//         <Select
+//           labelId="demo-select-small"
+//           id="demo-select-small"
+//           value={bulbMovement === "2" ? "2" : bulbMovement.target.value}
+//           label="Bulb travel pattern"
+//           onChange={setBulbMovement}
+//         >
+//           <MenuItem value=""></MenuItem>
+//           <MenuItem value={"2"}>Up and down</MenuItem>
+//           <MenuItem value={"0"}>Breathing whole group</MenuItem>
+//           <MenuItem value={"1"}>Fully random</MenuItem>
+//         </Select>
+//       </FormControl>
+//       <FormControl
+//         disabled={!loggedIn}
+//         sx={{ m: 1, minWidth: 120 }}
+//         size="small"
+//       >
+//         <InputLabel id="demo-select-small">Bulb Colours</InputLabel>
+//         <Select
+//           labelId="demo-select-small"
+//           id="demo-select-small"
+//           value={bulbColours === "1" ? "1" : bulbColours.target.value}
+//           label="Bulb travel pattern"
+//           onChange={setbulbColours}
+//         >
+//           <MenuItem value=""></MenuItem>
+//           <MenuItem value={"0"}>Full random colours</MenuItem>
+//           <MenuItem value={"1"}>Specified colours</MenuItem>
+//         </Select>
+//       </FormControl>
+//       <FormControl
+//         disabled={!loggedIn}
+//         sx={{ m: 1, minWidth: 120 }}
+//         size="small"
+//       >
+//         <InputLabel id="demo-select-small">Mapping</InputLabel>
+//         <Select
+//           labelId="demo-select-small"
+//           id="demo-select-small"
+//           value={mapping}
+//           label="Mapping"
+//           onChange={(e) => {
+//             setMapping(e.target.value);
+//           }}
+//         >
+//           <MenuItem key={Math.random()} value="Empty">
+//             Select
+//           </MenuItem>
+//           {filteredEventList.map((option) => {
+//             return (
+//               <MenuItem key={Math.random()} value={option.name}>
+//                 {option.name}
+//               </MenuItem>
+//             );
+//           })}{" "}
+//         </Select>
+//       </FormControl>
+//       <br></br>
+//       <br></br>
+//       <Button
+//         disabled={mapping === "Empty" ? true : false}
+//         id={1}
+//         onClick={clickHandler}
+//         variant="contained"
+//       >
+//         Create LightFile
+//       </Button>
+//       <br></br>
+//       <br></br>
+//       <Button
+//         disabled={!loggedIn || eventsDisabled ? true : false}
+//         id={0}
+//         onClick={clickHandler}
+//         variant="contained"
+//       >
+//         send to phone and start event
+//       </Button>
+//       <br></br>
+//       <br></br>
+//       <div></div>
+//     </div>
+//     {/* end of Event control */}
+
+//     <div>
+//       <div
+//         style={{
+//           borderTop: "2px solid #fff ",
+//           marginLeft: 20,
+//           marginRight: 20,
+//           marginTop: 30,
+//         }}
+//       >
+//         Connection time to lights might take upto 3-4 minutes, this is due to
+//         the many bluetooth devices in the area and the lamps all being
+//         positioned in the range of the main controller, in real live situations
+//         this is not the case and therefore this will not be fixed
+//       </div>
+//       <div>
+//         <div
+//           style={{
+//             borderTop: "2px solid #fff ",
+//             marginLeft: 20,
+//             marginRight: 20,
+//             marginTop: 30,
+//           }}
+//         ></div>
+//         <div>
+//           <AndroidServerStatus />
+//         </div>
+//       </div>
+//     </div>
+//   </div>
+// );

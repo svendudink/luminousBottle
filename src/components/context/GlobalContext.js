@@ -4,7 +4,7 @@ export const GlobalContext = createContext();
 export const GlobalContextProvider = (props) => {
   const [tempMarkers, setTempMarkers] = useState([]);
   const [bulbIdList, setBulbIdList] = useState("");
-  const [activeMap, setActiveMap] = useState("(Select)");
+  const [activeMap, setActiveMap] = useState("AlexanderPlatz Demo");
   const [eventList, setEventList] = useState("");
   const [eventcoords, setEventcoords] = useState("");
   const [markers, setMarkers] = useState([]);
@@ -19,6 +19,7 @@ export const GlobalContextProvider = (props) => {
   const [bulbConfiguratorVisibility, setBulbConfiguratorVisibility] =
     useState("hidden");
   const [map, setMap] = useState();
+  const [demo] = useState("Demo");
   const [zoom, setZoom] = useState(17);
   const [centerOption, setCenterOption] = useState();
   const [currentBrightness, setCurrentBrightness] = useState(100);
@@ -39,8 +40,8 @@ export const GlobalContextProvider = (props) => {
     },
   ]);
   const [center, setCenter] = useState({
-    lat: 53.831777322304355,
-    lng: 13.239378406704096,
+    lat: 52.52011651702165,
+    lng: 13.407887145279421,
   });
 
   const GraphQLHandler = async (
@@ -165,6 +166,7 @@ export const GlobalContextProvider = (props) => {
         selectedColors,
         setSelectedColors,
         maxBulbIdLength,
+        demo,
       }}
     >
       {props.children}

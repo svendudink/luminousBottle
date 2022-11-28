@@ -1,6 +1,7 @@
 import { createContext, useState, useEffect, useContext } from "react";
 import { io } from "socket.io-client";
 import { GlobalContext } from "./GlobalContext.js";
+import axios from "axios";
 let socket = io();
 
 export const ioContext = createContext();
@@ -11,6 +12,7 @@ export const IoContextProvider = (props) => {
   const [isConnected, setIsConnected] = useState(false);
   const [connect, setConnect] = useState(false);
   const [serverStatus, setServerStatus] = useState("");
+  const [ip, setIP] = useState("");
 
   useEffect(() => {
     if (!connect) {
@@ -26,6 +28,11 @@ export const IoContextProvider = (props) => {
       });
       console.log(socket.connected);
     }
+
+    // getData();
+    return () => {
+      socket.disconnect();
+    };
   }, []);
 
   return (

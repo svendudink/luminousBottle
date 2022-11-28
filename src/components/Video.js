@@ -15,7 +15,7 @@ const Video = () => {
     <div></div>
   ) : (
     <img
-      style={{ width: "40%", height: "40%" }}
+      style={{ width: "100%", height: "100%" }}
       src={testImg ? testImage : `data:image/jpeg;base64,${liveVideo}`}
       alt={""}
     />

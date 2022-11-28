@@ -27,6 +27,7 @@ export default function IconMenu(props) {
     setCurrentBrightness,
     selectedColors,
     setSelectedColors,
+    demo,
   } = React.useContext(GlobalContext);
 
   const options = [
@@ -52,17 +53,23 @@ export default function IconMenu(props) {
   }, [currentLampId]);
 
   const handleBulbIdChange = (event) => {
-    setCurrentBulbId(event.target.value);
-    console.log("this", event.target.value);
-    setValue(event.target.value);
-    GraphQLHandler(
-      props.id,
-      "lat",
-      "lng",
-      "updateBulbId",
-      activeMap,
-      event.target.value
-    );
+    if (activeMap.includes(demo)) {
+      window.alert(
+        "you Cant permanently change position of lamps on Demo events, you can change the colors and ofocurse you can make your own map where you can change the postions freely"
+      );
+    } else {
+      setCurrentBulbId(event.target.value);
+      console.log("this", event.target.value);
+      setValue(event.target.value);
+      GraphQLHandler(
+        props.id,
+        "lat",
+        "lng",
+        "updateBulbId",
+        activeMap,
+        event.target.value
+      );
+    }
 
     // await markers.forEach((element) => {
     //   if (element.id === props.id) {
@@ -135,6 +142,10 @@ export default function IconMenu(props) {
         </MenuItem>
         <Divider />
         <MenuItem>
+          <QuestionMark
+            story={"bulbId"}
+            size={{ width: "350px", height: "190px" }}
+          />
           <ListItemText>
             <div>
               <Dropdown
@@ -175,7 +186,7 @@ export default function IconMenu(props) {
           <ColorButton onClick={ColorSelectHandler} color={"blue"} />
           <QuestionMark
             story={"colors"}
-            size={{ width: "400px", height: "130px" }}
+            size={{ width: "300px", height: "190px" }}
           />
         </MenuItem>
         <MenuItem>

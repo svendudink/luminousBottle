@@ -13,37 +13,156 @@
   height: 100vh;
 }
 
-/* .App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.tenKField {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr 1fr 1fr 1fr 1fr 1fr;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* Basic controller live demo */
+
+.video {
+  grid-column: 2/ 16;
+  grid-row: 2/7;
+  align-content: space-around;
+}
+.welcome {
+  grid-column: 17/ 24;
+  grid-row: 1/2;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.directControl {
+  grid-column: 17/ 27;
+  grid-row: 2/4;
+  border: 2px solid rgb(99, 120, 196);
+
+  border-radius: 10px;
+}
+
+.buildEvent {
+  grid-column: 17/ 27;
+  grid-row: 5/7;
+  border: 2px solid rgb(99, 120, 196);
+
+  border-radius: 10px;
+}
+
+.serverStatusMonitor {
+  grid-column: 28/ 35;
+  grid-row: 2/7;
+  border: 2px solid rgb(99, 120, 196);
+
+  border-radius: 10px;
+}
+
+/* CreateMapping */
+
+.googleMap {
+  grid-column: 5 / 20;
+  grid-row: 1/4;
+}
+
+.iconMenu {
+  grid-column: 26 / 37;
+  grid-row: 1 / 5;
+}
+
+.addLamp {
   display: flex;
+  justify-content: baseline;
   flex-direction: column;
-  align-items: center;
+  box-sizing: content-box;
+  width: 100%;
+  height: 600px;
+  border: 2px solid rgb(99, 120, 196);
+  margin-left: 10px;
+  border-radius: 10px;
+  float: left;
+}
+
+.addLampContainer {
+  grid-column: 1 / 4;
+  grid-row: 1/12;
+}
+
+.mapOps {
+  box-sizing: content-box;
+  width: 100%;
+  height: 200px;
+  border: 2px solid rgb(99, 120, 196);
+
+  border-radius: 10px;
+  float: left;
+}
+
+.mapManager {
+  grid-column: 14 / 23;
+  grid-row: 4 / 5;
+}
+
+.legenda {
+  box-sizing: content-box;
+  width: 100%;
+  height: 200px;
+  border: 2px solid rgb(99, 120, 196);
+
+  border-radius: 10px;
+  float: left;
+}
+
+.legendaContainer {
+  grid-column: 2 / 12;
+  grid-row: 4 / 5;
+}
+
+.enhancedTable {
+  height: 300px;
+  padding-top: 4%;
+
+  display: flex;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+.enhancedTableContainer {
+  grid-column: 20 / 36;
+  grid-row: 3 / 5;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-} */
+.about {
+  padding-bottom: 200px;
+}
+
+.contactData {
+  grid-column: 12 / 24;
+  grid-row: 1 / 3;
+  padding-bottom: 240px;
+}
+
+.registered {
+  grid-column: 5 / 19;
+  grid-row: 1 / 7;
+  box-sizing: content-box;
+  width: 40%;
+  height: 250px;
+  border: 2px solid rgb(99, 120, 196);
+
+  border-radius: 10px;
+  float: left;
+  margin-bottom: 560px;
+}
+
+.notRegistered {
+  grid-column: 20 / 36;
+  grid-row: 1 / 7;
+  box-sizing: content-box;
+  width: 40%;
+  height: 600px;
+  border: 2px solid rgb(99, 120, 196);
+
+  border-radius: 10px;
+  float: left;
+}
+
+.textField {
+  padding-bottom: 1%;
+}

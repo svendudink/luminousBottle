@@ -26,9 +26,12 @@ const AndroidServerStatus = () => {
   ));
 
   return (
-    <div className="textarea">
-      {renderList}
-      <div ref={bottomRef} />
+    <div>
+      <h1>Server updates</h1>
+      <div className="textarea">
+        {renderList}
+        <div ref={bottomRef} />
+      </div>
     </div>
   );
 };
