@@ -6,6 +6,7 @@ export const UserContext = createContext();
 export const UserContextProvider = (props) => {
   const { activePage, setActivePage } = useContext(GlobalContext);
 
+  const [messages, setMessages] = useState("");
   const [errorMessages, setErrorMessages] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
   const [text, setText] = useState({
@@ -69,9 +70,14 @@ export const UserContextProvider = (props) => {
 
     console.log("second");
     console.log(userData.current);
+    if (userData.current.data) {
+      setErrorMessages("");
+      setMessages(userData.current.data);
+    }
 
     if (userData.current.errors) {
       console.log("check", userData.current.errors[0].message);
+      setMessages("");
       setErrorMessages(userData.current.errors[0].message);
       setText({
         emailAdress: "",
@@ -116,6 +122,8 @@ export const UserContextProvider = (props) => {
         setErrorMessages,
         text,
         setText,
+        messages,
+        setMessages,
       }}
     >
       {props.children}

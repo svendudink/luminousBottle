@@ -32,7 +32,7 @@ const drawerWidth = 240;
 // ];
 
 export default function DrawerAppBar(props) {
-  const { loggedIn, setLoggedIn } = useContext(UserContext);
+  const { loggedIn, setLoggedIn, setMessages } = useContext(UserContext);
 
   const [navItems, setNavItems] = useState([
     "Home",
@@ -83,6 +83,7 @@ export default function DrawerAppBar(props) {
 
   const logout = () => {
     localStorage.removeItem("token");
+    setMessages("");
     setLoggedIn(false);
   };
 

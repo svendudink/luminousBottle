@@ -80,11 +80,11 @@ export const GlobalContextProvider = (props) => {
         if (request === "load") {
           setMarkers(JSON.parse(resData.data.MapLamps.mapArray));
           setMaxBulbIdLength(JSON.parse(resData.data.MapLamps.maxBulbIdLength));
-
+          console.log(resData.data.MapLamps);
           setBulbIdList(JSON.parse(resData.data.MapLamps.bulbIdList));
         } else if (request === "firstLoad") {
           setEventList(JSON.parse(resData.data.MapLamps.eventList));
-
+          console.log(resData.data.MapLamps);
           setFilteredEventList(
             JSON.parse(resData.data.MapLamps.eventList).filter(function (e) {
               e.name = e.name.replaceAll("UNIS20", " ");
@@ -106,6 +106,7 @@ export const GlobalContextProvider = (props) => {
       .then(() => {})
       .catch((error) => console.log(error));
   };
+  console.log(bulbIdList);
 
   return (
     <GlobalContext.Provider

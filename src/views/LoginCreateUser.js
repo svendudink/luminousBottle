@@ -6,13 +6,20 @@ import { UserContext } from "../components/context/UserContext";
 
 const LoginCreateUser = () => {
   const { setActivePage } = useContext(GlobalContext);
-  const { UserGraphQLHandler, userData, errorMessages, text, setText } =
-    useContext(UserContext);
+  const {
+    UserGraphQLHandler,
+    userData,
+    errorMessages,
+    text,
+    setText,
+    messages,
+  } = useContext(UserContext);
 
-  const [checkBox, setCheckBox] = useState({});
+  const [checkBox, setCheckBox] = useState(false);
 
   console.log(userData.current);
   console.log(errorMessages);
+  console.log(messages);
 
   useEffect(() => {
     setActivePage("LoginCreateUser");
@@ -30,7 +37,16 @@ const LoginCreateUser = () => {
   };
 
   const sendFormHandler = () => {
-    UserGraphQLHandler(0, text);
+    console.log(text.companyName || text.yourName);
+    if (checkBox) {
+      if (text.companyName && text.yourName) {
+        UserGraphQLHandler(0, text);
+      } else {
+        alert("fill mandetory fields");
+      }
+    } else {
+      UserGraphQLHandler(0, text);
+    }
   };
 
   const loginTextInputHandler = (e) => {
@@ -63,7 +79,11 @@ const LoginCreateUser = () => {
           <br />
           <Button onClick={loginTextInputHandler}>Login</Button>
         </div>
-        <h5 style={{ color: "red" }}>{errorMessages}</h5>
+        <h5 style={{ color: "red" }}>
+          {errorMessages === "Password is incorrect." ||
+            errorMessages === "user not found" ||
+            errorMessages}
+        </h5>
       </div>
       <div className="notRegistered">
         As a registered user, you can run your own events and view your events
@@ -86,8 +106,7 @@ const LoginCreateUser = () => {
           onChange={textInputHandler}
         />
         <br />
-        Are you a recruiter and are you interested in hiring me as a
-        Web-Developer/Programmer?
+        Are you a recruiter and would you like to receive my CV ?
         <Checkbox
           id={"recruiter"}
           onClick={checkBoxHandler}
@@ -96,6 +115,7 @@ const LoginCreateUser = () => {
         <br />
         <div>
           <TextField
+            required
             disabled={!checkBox.recruiter}
             id="companyName"
             label="Company name"
@@ -120,6 +140,7 @@ const LoginCreateUser = () => {
           />
           <br /> <br />
           <TextField
+            required
             disabled={!checkBox.recruiter}
             id="yourName"
             label="Your name"
@@ -128,6 +149,15 @@ const LoginCreateUser = () => {
           />
         </div>
         <Button onClick={sendFormHandler}>Register</Button>
+        <h5 style={{ color: "red" }}>
+          {errorMessages === "user exist already!" ||
+          errorMessages === "invalid input"
+            ? errorMessages
+            : ""}
+        </h5>
+        <h5 style={{ color: "green" }}>
+          {messages ? "succesfully created your account" : ""}
+        </h5>
       </div>
     </div>
   );
