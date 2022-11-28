@@ -52,12 +52,6 @@ function BackgroundLayer() {
 
   const [user, setUser] = useState(false);
 
-  if (isMobile) {
-    alert(
-      "This page is not build for phones, for the best experience, view on desktop"
-    );
-  }
-
   const checkIfUserIsLoggedIn = () => {
     const token = getToken();
     if (token) {
@@ -69,6 +63,12 @@ function BackgroundLayer() {
     }
   };
   useEffect(() => {
+    if (isMobile) {
+      alert(
+        "This page is not build for phones, for the best experience, view on desktop"
+      );
+    }
+
     checkIfUserIsLoggedIn();
   }, [user]);
 
