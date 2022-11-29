@@ -3,8 +3,6 @@ import "./Popup.css";
 import { useContext, useReducer } from "react";
 import { GlobalContext } from "./context/GlobalContext";
 import QrScanner from "./QrScanner.js";
-import ReactDOM from "react-dom/client";
-import { QrReader } from "react-qr-reader";
 
 function Popup(props) {
   const { buttonPopup, setButtonPopup } = useContext(GlobalContext);
@@ -13,9 +11,10 @@ function Popup(props) {
     setButtonPopup(false);
     // ReactDOM.unmountComponentAtNode(QrReader);
   };
+  console.log(buttonPopup);
 
   return buttonPopup ? (
-    <div className="popup">
+    <div style={{ zIndex: "1000" }} className="popup">
       <div className="popup-inner">
         <button onClick={handleClose} className="close-btn">
           close

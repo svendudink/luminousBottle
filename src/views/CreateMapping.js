@@ -468,6 +468,9 @@ const CreateMapping = () => {
         <div className="enhancedTable">
           <EnhancedTable />{" "}
         </div>
+        <div>
+          <Popup trigger={buttonPopup} />
+        </div>
       </div>
     </div>
   );

@@ -18,7 +18,9 @@ const Video = () => {
   useEffect(() => {
     console.log("test");
     console.log(pic);
-    console.log(JSON.parse(pic));
+    if (pic) {
+      console.log(JSON.parse(pic).image_results[0].image);
+    }
   }, [pic]);
 
   return liveVideo === "" && testImg === false ? (

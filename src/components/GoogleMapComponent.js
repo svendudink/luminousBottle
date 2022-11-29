@@ -244,7 +244,7 @@ const GoogleMapComponent = (props) => {
             >
               <IconMenu id={currentLampId} bulbIdList={bulbIdList} />
             </div>
-            <div>
+            <div className="QR">
               <Popup trigger={buttonPopup} />
             </div>
           </Map>

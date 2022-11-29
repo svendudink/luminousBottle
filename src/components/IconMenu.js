@@ -28,6 +28,7 @@ export default function IconMenu(props) {
     selectedColors,
     setSelectedColors,
     demo,
+    buttonPopup,
   } = React.useContext(GlobalContext);
 
   const options = [
@@ -36,6 +37,8 @@ export default function IconMenu(props) {
       return { label: e, value: e };
     }),
   ];
+
+  console.log(buttonPopup);
 
   useEffect(() => {
     let temp = markers.filter((e) => {
