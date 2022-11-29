@@ -67,6 +67,8 @@ const BasicController = () => {
     }
   }, [serverStatus]);
 
+  
+
   /////////////////////////////////////Sven's//Coding/ Date: 17-10-2022 15:33 ////////////
   // sends parameters to backend for control of android device
   /////////////////////////////////////////gnidoC//s'nevS////////////////////////////////
@@ -232,6 +234,12 @@ const BasicController = () => {
 
   return (
     <div className="tenKFieldBasic">
+      <div className="videoQuestionMark">
+        <QuestionMark
+          story="video"
+          size={{ height: "190px", width: "300px" }}
+        />
+      </div>
       <div className="video">
         <Video />
       </div>
@@ -311,6 +319,12 @@ const BasicController = () => {
         </div>
       </div>
       <div className="buildEvent">
+        <div style={{ paddingRight: "500px" }}>
+          <QuestionMark
+            story="eventControl"
+            size={{ height: "190px", width: "650px" }}
+          />
+        </div>
         <br />
         <FormControl
           disabled={!loggedIn}

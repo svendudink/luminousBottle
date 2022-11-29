@@ -123,6 +123,50 @@ const Storys = (props) => {
       </div>
     );
   }
+  if (props.story === "video") {
+    return (
+      <div style={{ color: "black" }}>
+        this is a live video stream of 11 of the 132 bluetooth <br />
+        lamps i made for events
+        <br />
+        the video stops after 4 minutes to keep the stress on the server low,
+        <br />
+        the video might be laggy, this is because it runs on a Ebay
+        <br />
+        kleinanzeigen purchased broken 25 euro laptop
+      </div>
+    );
+  }
+  if (props.story === "eventControl") {
+    return (
+      <div style={{ color: "black" }}>
+        the bulbs travel with a speed of 0.625sec per bulbs, the travel pattern
+        configures which direction they travel, up and down in chronological
+        order, the whole group changing colors at the same time, or random
+        changes, bulb colors can be set to the colors set in the event building
+        section, or the can be set to fully random, this will ignore colors set
+        in the event builder, the last one is to select the map the first step
+        is to build the light file, when its ready it Can be send to the
+        controller, starting of events can take up to 5 minutes, but can also
+        only take a few seconds, the reason for this is, there is a lot of
+        bluetooth interference in the house, which makes it often take a very
+        long time to find its MESH path, in real live situations this is not a
+        issue since the controller will not have 11 lights in its sight
+      </div>
+    );
+  }
+  if (props.story === "server") {
+    return (
+      <div style={{ color: "black" }}>
+        Server updates is there to view what happens <br />
+        in between the server and the controller, <br />
+        much is done with ADB, extracting frames, <br />
+        from the android device to verify <br />
+        and to send touch events which control the device in <br />
+        direct control mode
+      </div>
+    );
+  }
 };
 
 export default Storys;

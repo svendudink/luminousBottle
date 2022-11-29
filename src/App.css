@@ -166,3 +166,9 @@
 .textField {
   padding-bottom: 1%;
 }
+
+.videoQuestionMark {
+  grid-column: 2;
+
+  bottom: 0;
+}

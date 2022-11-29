@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { ioContext } from "./context/IoConnectContext";
 import testImage from "../media/splash.jpg";
 
@@ -10,6 +10,16 @@ const Video = () => {
   const { socket } = useContext(ioContext);
 
   socket.on("image", setLiveVideo);
+
+  const [pic, setPic] = useState("");
+
+  socket.on("infoExtractTest", setPic);
+
+  useEffect(() => {
+    console.log("test");
+    console.log(pic);
+    console.log(JSON.parse(pic));
+  }, [pic]);
 
   return liveVideo === "" && testImg === false ? (
     <div></div>

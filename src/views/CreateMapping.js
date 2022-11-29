@@ -148,14 +148,13 @@ const CreateMapping = () => {
     console.log(currentLampId);
     let findMiddle = false;
 
-    if (
-      action === "deleteActive" ||
-      (action === "addLampBeforeActive" && activeMap.includes(demo))
-    ) {
-      window.alert(
-        "Cant delete lamps on Demo events, your are limited to brightness and color change,feel free to create your own event, ofcourse you can delete lamps on your own event"
-      );
-      return;
+    if (activeMap.includes(demo)) {
+      if (action === "deleteActive" || action === "addLampBeforeActive") {
+        window.alert(
+          "Cant delete lamps on Demo events, your are limited to brightness and color change,feel free to create your own event, ofcourse you can delete lamps on your own event"
+        );
+        return;
+      }
     }
     if (action === "deleteActive" && markers.length <= currentLampId) {
       console.log("checked");

@@ -65,6 +65,7 @@ export const GlobalContextProvider = (props) => {
     })
       .then((res) => res.json())
       .then((resData) => {
+        console.log("this?", request);
         if (
           request === "verticalScan" ||
           request === "horizontalScan" ||
@@ -74,15 +75,18 @@ export const GlobalContextProvider = (props) => {
           request === "addColor"
         ) {
           setMarkers(JSON.parse(resData.data.MapLamps.mapArray));
-
+          console.log("this?");
           setBulbIdList(JSON.parse(resData.data.MapLamps.bulbIdList));
         }
         if (request === "load") {
+          console.log("load request", resData.data.MapLamps.bulbIdList);
           setMarkers(JSON.parse(resData.data.MapLamps.mapArray));
-          setMaxBulbIdLength(JSON.parse(resData.data.MapLamps.maxBulbIdLength));
-          console.log(resData.data.MapLamps);
           setBulbIdList(JSON.parse(resData.data.MapLamps.bulbIdList));
         } else if (request === "firstLoad") {
+          console.log(
+            "xox",
+            JSON.parse(resData.data.MapLamps.availableBulbIdList)
+          );
           setEventList(JSON.parse(resData.data.MapLamps.eventList));
           console.log(resData.data.MapLamps);
           setFilteredEventList(
@@ -95,6 +99,12 @@ export const GlobalContextProvider = (props) => {
           );
 
           setBulbIdList(JSON.parse(resData.data.MapLamps.bulbIdList));
+          console.log(
+            Object.keys(JSON.parse(resData.data.MapLamps.bulbIdList)).length
+          );
+          setMaxBulbIdLength(
+            Object.keys(JSON.parse(resData.data.MapLamps.bulbIdList)).length
+          );
         } else if (request === "newMap") {
           GraphQLHandler(0, center.lat, center.lng, "firstLoad", textValue);
         } else if (request === "updateBulbId" || request === "addLamp") {
