@@ -123,14 +123,14 @@ const LoginCreateUser = () => {
             onChange={textInputHandler}
           />
           <br /> <br />
-          <TextField
+          {/* <TextField
             disabled={!checkBox.recruiter}
             id="aboutCompany"
             label="Company Website"
             value={text.aboutCompany ? text.aboutCompany : ""}
             onChange={textInputHandler}
-          />
-          <br /> <br />
+          /> 
+          <br /> <br />*/}
           <TextField
             disabled={!checkBox.recruiter}
             id="phoneNumber"
