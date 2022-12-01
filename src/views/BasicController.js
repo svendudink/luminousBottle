@@ -67,8 +67,6 @@ const BasicController = () => {
     }
   }, [serverStatus]);
 
-  
-
   /////////////////////////////////////Sven's//Coding/ Date: 17-10-2022 15:33 ////////////
   // sends parameters to backend for control of android device
   /////////////////////////////////////////gnidoC//s'nevS////////////////////////////////
@@ -300,6 +298,30 @@ const BasicController = () => {
             disabled={lightDisabled}
           >
             BLUE
+          </Button>
+          <Button
+            id={0}
+            onClick={() => directEventHandler("yellow")}
+            variant="contained"
+            disabled={lightDisabled}
+          >
+            YELLOW
+          </Button>
+          <Button
+            id={0}
+            onClick={() => directEventHandler("orange")}
+            variant="contained"
+            disabled={lightDisabled}
+          >
+            ORANGE
+          </Button>
+          <Button
+            id={0}
+            onClick={() => directEventHandler("white")}
+            variant="contained"
+            disabled={lightDisabled}
+          >
+            WHITE
           </Button>
           <br></br>
           1%

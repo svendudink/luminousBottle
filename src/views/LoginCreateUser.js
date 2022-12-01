@@ -121,7 +121,7 @@ const LoginCreateUser = () => {
             label="Company name"
             value={text.companyName ? text.companyName : ""}
             onChange={textInputHandler}
-          />
+          />{" "}
           <br /> <br />
           {/* <TextField
             disabled={!checkBox.recruiter}

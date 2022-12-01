@@ -75,7 +75,7 @@ export const GlobalContextProvider = (props) => {
           request === "addColor"
         ) {
           setMarkers(JSON.parse(resData.data.MapLamps.mapArray));
-          
+
           setBulbIdList(JSON.parse(resData.data.MapLamps.bulbIdList));
         }
         if (request === "load") {
@@ -83,7 +83,6 @@ export const GlobalContextProvider = (props) => {
           setMarkers(JSON.parse(resData.data.MapLamps.mapArray));
           setBulbIdList(JSON.parse(resData.data.MapLamps.bulbIdList));
         } else if (request === "firstLoad") {
-          
           setEventList(JSON.parse(resData.data.MapLamps.eventList));
           console.log(resData.data.MapLamps);
           setFilteredEventList(

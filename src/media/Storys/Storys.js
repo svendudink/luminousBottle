@@ -183,55 +183,50 @@ export const AboutStory = () => {
         }}
       />
       <p className="c2">
-        <span className="c0">How did it begin:</span>
+        <span className="c0">How it began</span>
       </p>
       <p className="c1">
         <span className="c0" />
       </p>
       <p className="c2">
         <span className="c0">
-          Bottle Luminous started when my Partner Sarah, and i, (Sven) showed
-          interest in doing the path lightning for a small art festival around
-          berlin.
+          Bottle Luminous started when my partner, Sarah and I showed interest
+          in creating a lighting project for a small art festival around Berlin.
+          I already had some experience with smart lights at home so it seemed
+          like something to expand upon and make some cool path lightning. I had
+          dreams to make it possible to change the colours of each light too.
         </span>
       </p>
-      <p className="c2">
-        <span className="c0">
-          &nbsp;as Sven already had some experience with smart-lights at home,
-          it seemed like something to expand upon, and really make some cool
-          path lightning which would actually do something more than just have
-          one colour,
-        </span>
-      </p>
+
       <p className="c1">
         <span className="c0" />
       </p>
       <p className="c2">
-        <span className="c0">Controlling the lights:</span>
+        <span className="c0">Controlling the lights</span>
       </p>
       <p className="c1">
         <span className="c0" />
       </p>
       <p className="c2">
         <span className="c0">
-          One of the biggest challenges was, that the LED bulbs are controlled
-          by an android app with very limited functionality, here the first
-          programming challenge started, as a junior web developer Sven did not
+          One of the biggest challenges was that the LED bulbs are controlled by
+          an android app with very limited functionality. Here the first
+          programming challenge started. As a junior web developer I did not
           have the skills yet to write a complex low level Bluetooth driver. The
-          chosen approach was: reverse engineering, Sven rooted an android
-          device, and made 2 clone images of the phone, one with a lightbulb on,
-          and one with the lightbulb off, by doing a deep compare of the 2 clone
-          images, it came to light which file and line was responsible for
-          turning the lights on and off, form here on it was just simply
-          modifying the android file, create modified routines with javascript,
-          and send those commands through (Android Debugging Mode),
+          chosen approach was: reverse engineering. I rooted an android device,
+          and made 2 clone images of the phone, one with a lightbulb on, and one
+          with the lightbulb off, by doing a deep compare of the 2 clone images,
+          it came to light which file and line was responsible for turning the
+          lights on and off, from here it was just simply a case of modifying
+          the android file, create modified routines with javascript, and
+          sending those commands. (Android Debugging Mode)
         </span>
       </p>
       <p className="c1">
         <span className="c0" />
       </p>
       <p className="c2">
-        <span className="c0">How are the Bulbs Connected:</span>
+        <span className="c0">How the bulbs are connected</span>
       </p>
       <p className="c1">
         <span className="c0" />
@@ -241,7 +236,7 @@ export const AboutStory = () => {
           The lightbulbs are connected through Bluetooth MESH, this means, the
           Bridge (android smartphone), is only connected to one lightbulb, this
           lightbulb is connected to every lightbulb in its reach, so far the
-          longest chain we made, was 700 Meters, but there is no reason to
+          longest chain we made, was 700 metres, but there is no reason to
           believe that this length is anywhere near the maximum
         </span>
       </p>
@@ -265,19 +260,17 @@ export const AboutStory = () => {
         <span className="c0" />
       </p>
       <p className="c2">
+        <span className="c0">What set up looks like</span>
+      </p>
+      <p className="c2">
         <span className="c0">
-          How would setting up the bulbs look like on an event:
+          Step 1: Place the bottles into position on the event and connect them
+          with power
         </span>
       </p>
       <p className="c2">
         <span className="c0">
-          Step 1: Placing the bottles into position on the event and connect
-          them with power
-        </span>
-      </p>
-      <p className="c2">
-        <span className="c0">
-          Step 2: Create and event map in the event manager
+          Step 2: Create a event map in the event manager
         </span>
       </p>
       <p className="c2">
@@ -312,11 +305,11 @@ export const AboutStory = () => {
       </p>
       <p className="c2">
         <span className="c0">
-          Step 7: start routine on OSRAM app, the routine is around 24 hours
-          long, it might take upto 5 minutes before the routine will show, the
-          reason for this is, it sends a custom step by step routine file to the
-          device, with around 300.000 steps, the app was not made to be reverse
-          engineered, it did work very well though
+          Step 7: Start routine on OSRAM app, the routine is around 24 hours
+          long. It might take upto 5 minutes before the routine will show. The
+          reason for this is that it sends a custom step by step routine file to
+          the device with around 300.000 steps the app was not made to be
+          reverse engineered it did work very well though
         </span>
       </p>
       <p className="c1">
