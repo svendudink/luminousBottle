@@ -42,7 +42,7 @@ const BasicController = () => {
 
   const [bulbMovement, setBulbMovement] = useState("2");
   const [bulbColours, setbulbColours] = useState("1");
-  const [mapping, setMapping] = useState(`Empty`);
+  const [mapping, setMapping] = useState(`AlexanderPlatz Demo`);
   const [liveVideo, setLiveVideo] = useState("");
   const [eventsDisabled, setEventsDisabled] = useState(false);
   const [lightDisabled, setLightDisabled] = useState(true);
@@ -112,7 +112,6 @@ const BasicController = () => {
         "none",
         "enableDirectControl"
       );
-      setLightDisabled(false);
     }
   }, [loggedIn]);
 
@@ -124,6 +123,7 @@ const BasicController = () => {
     if (e.target.checked) {
       console.log("checked");
       setEventsDisabled(true);
+
       GraphQLHandler(
         0,
         "center.lat",
@@ -242,36 +242,22 @@ const BasicController = () => {
         <Video />
       </div>
       <div className="welcome">
-        {loggedIn ? (
-          <div style={{ cursor: "pointer", color: "green", fontSize: 24 }}>
-            You are Logged in, all functions are available
+        {
+          <div>
+            Welcome to Bottle Luminous Live Demo, set a color, or choose a map
           </div>
-        ) : (
-          <div
-            onClick={() => navigate("/LoginCreateUser")}
-            style={{ color: "red" }}
-          >
-            Register and login to unlock map building, in demo mode only direct
-            control is available
-          </div>
-        )}
+        }
       </div>
       <div className="directControl">
         <div>
-          {loggedIn ? (
+          {
             <div>
               {lightDisabled
                 ? "Enable direct control of lights"
                 : "direct control is enabled, switch off to use the event build mode"}
             </div>
-          ) : (
-            <div>Welcome to Demo mode, change the color and the brightness</div>
-          )}
-          {loggedIn ? (
-            <Switch disabled={!loggedIn} onChange={directControl} />
-          ) : (
-            ""
-          )}
+          }
+          {<Switch onChange={directControl} />}
         </div>
 
         <div style={{ paddingTop: "10px" }}>
@@ -349,7 +335,7 @@ const BasicController = () => {
         </div>
         <br />
         <FormControl
-          disabled={!loggedIn}
+          disabled={eventsDisabled}
           sx={{ m: 1, minWidth: 120 }}
           size="small"
         >
@@ -368,7 +354,7 @@ const BasicController = () => {
           </Select>
         </FormControl>
         <FormControl
-          disabled={!loggedIn}
+          disabled={eventsDisabled}
           sx={{ m: 1, minWidth: 120 }}
           size="small"
         >
@@ -385,53 +371,53 @@ const BasicController = () => {
             <MenuItem value={"1"}>Specified colours</MenuItem>
           </Select>
         </FormControl>
-        <FormControl
-          disabled={!loggedIn}
-          sx={{ m: 1, minWidth: 120 }}
-          size="small"
-        >
-          <InputLabel id="demo-select-small">Mapping</InputLabel>
-          <Select
-            labelId="demo-select-small"
-            id="demo-select-small"
-            value={mapping}
-            label="Mapping"
-            onChange={(e) => {
-              setMapping(e.target.value);
-            }}
+        {filteredEventList[1] && (
+          <FormControl
+            disabled={eventsDisabled}
+            sx={{ m: 1, minWidth: 120 }}
+            size="small"
           >
-            <MenuItem key={Math.random()} value="Empty">
-              Select
-            </MenuItem>
-            {filteredEventList.map((option) => {
-              return (
-                <MenuItem key={Math.random()} value={option.name}>
-                  {option.name}
-                </MenuItem>
-              );
-            })}{" "}
-          </Select>
-        </FormControl>
+            <InputLabel id="demo-select-small">Choose map</InputLabel>
+            <Select
+              labelId="demo-select-small"
+              id="demo-select-small"
+              value={mapping}
+              label="Mapping"
+              onChange={(e) => {
+                setMapping(e.target.value);
+              }}
+            >
+              <MenuItem key={Math.random()} value={"Empty"}></MenuItem>
+              {filteredEventList.map((option) => {
+                return (
+                  <MenuItem key={Math.random()} value={option.name}>
+                    {option.name}
+                  </MenuItem>
+                );
+              })}{" "}
+            </Select>
+          </FormControl>
+        )}
         <br></br>
         <br></br>
         <Button
-          disabled={mapping === "Empty" ? true : false}
+          disabled={eventsDisabled}
           id={1}
           onClick={clickHandler}
           variant="contained"
         >
-          Create LightFile
+          Start Event
         </Button>
         <br></br>
         <br></br>
-        <Button
+        {/* <Button
           disabled={!loggedIn || eventsDisabled ? true : false}
           id={0}
           onClick={clickHandler}
           variant="contained"
         >
           send to phone and start event
-        </Button>
+        </Button> */}
         <br></br>
         <br></br>
         <div></div>

@@ -21,8 +21,16 @@ const About = () => {
         <br /> Phone Number: +491738346578 <br />
         Email: Sven@dudink.net
         <br />
-        Backend github: https://github.com/svendudink/Bottleluminousback <br />{" "}
-        Frontend Github: https://github.com/svendudink/BottleluminousFront
+        Backend github:{" "}
+        <a href=" https://github.com/svendudink/Bottleluminousback">
+          {" "}
+          https://github.com/svendudink/Bottleluminousback{" "}
+        </a>{" "}
+        <br /> Frontend Github:
+        <a href="https://github.com/svendudink/BottleluminousFront">
+          {" "}
+          https://github.com/svendudink/BottleluminousFront
+        </a>
       </div>
     </div>
   );

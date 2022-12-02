@@ -183,7 +183,9 @@ export const AboutStory = () => {
         }}
       />
       <p className="c2">
-        <span className="c0">How it began</span>
+        <span className="c0" style={{ fontSize: "17px", fontWeight: "bold" }}>
+          How it began
+        </span>
       </p>
       <p className="c1">
         <span className="c0" />
@@ -202,7 +204,9 @@ export const AboutStory = () => {
         <span className="c0" />
       </p>
       <p className="c2">
-        <span className="c0">Controlling the lights</span>
+        <span className="c0" style={{ fontSize: "17px", fontWeight: "bold" }}>
+          Controlling the lights
+        </span>
       </p>
       <p className="c1">
         <span className="c0" />
@@ -226,7 +230,9 @@ export const AboutStory = () => {
         <span className="c0" />
       </p>
       <p className="c2">
-        <span className="c0">How the bulbs are connected</span>
+        <span className="c0" style={{ fontSize: "17px", fontWeight: "bold" }}>
+          How the bulbs are connected
+        </span>
       </p>
       <p className="c1">
         <span className="c0" />
@@ -244,7 +250,9 @@ export const AboutStory = () => {
         <span className="c0" />
       </p>
       <p className="c2">
-        <span className="c0">Why the QR code on the Bottle:</span>
+        <span className="c0" style={{ fontSize: "17px", fontWeight: "bold" }}>
+          Why the QR code on the Bottle:
+        </span>
       </p>
       <p className="c2">
         <span className="c0">
@@ -260,7 +268,9 @@ export const AboutStory = () => {
         <span className="c0" />
       </p>
       <p className="c2">
-        <span className="c0">What set up looks like</span>
+        <span className="c0" style={{ fontSize: "17px", fontWeight: "bold" }}>
+          What set up looks like
+        </span>
       </p>
       <p className="c2">
         <span className="c0">
@@ -316,7 +326,9 @@ export const AboutStory = () => {
         <span className="c0" />
       </p>
       <p className="c2">
-        <span className="c0">Can i rent the lights for my event?:</span>
+        <span className="c0" style={{ fontSize: "17px", fontWeight: "bold" }}>
+          Can i rent the lights for my event?:
+        </span>
       </p>
       <p className="c2">
         <span className="c0">

@@ -10,6 +10,7 @@ import IconMenu from "../components/IconMenu";
 import QuestionMark from "../components/QuestionMark";
 import { Image } from "react-bootstrap";
 import "./CreateMapping.css";
+import { FormControl, InputLabel, MenuItem, Select } from "@mui/material";
 
 const Toolbar = () => {
   return <div className="head"></div>;
@@ -46,6 +47,10 @@ const CreateMapping = () => {
   /////////////////////////////////////Sven's//Coding/ Date: 17-10-2022 15:40 ////////////
   // Initial loading of values
   /////////////////////////////////////////gnidoC//s'nevS////////////////////////////////
+
+  useEffect(() => {
+    console.log(filteredEventList);
+  }, [filteredEventList]);
 
   useEffect(() => {
     setActivePage("createMapping");
@@ -383,12 +388,27 @@ const CreateMapping = () => {
           />
           <Button onClick={() => createNewMap()}>Add new map</Button>
           <div>
-            <Dropdown
-              label="Event name:"
-              options={filteredEventList}
-              value={activeMap}
-              onChange={dropdownHandleChange}
-            />
+            {filteredEventList[1] && (
+              <FormControl sx={{ m: 1, minWidth: 120 }} size="small">
+                <InputLabel id="demo-select-small">Choose map</InputLabel>
+                <Select
+                  labelId="demo-select-small"
+                  id="demo-select-small"
+                  value={activeMap}
+                  label="Mapping"
+                  onChange={dropdownHandleChange}
+                >
+                  <MenuItem key={Math.random()} value={"Empty"}></MenuItem>
+                  {filteredEventList.map((option) => {
+                    return (
+                      <MenuItem key={Math.random()} value={option.name}>
+                        {option.name}
+                      </MenuItem>
+                    );
+                  })}{" "}
+                </Select>
+              </FormControl>
+            )}
           </div>
           <Button
             onClick={deleteMap}
