@@ -21,6 +21,13 @@ import QuestionMark from "./QuestionMark";
 
 const drawerWidth = 240;
 
+const justCV = true;
+/////////////////////////////////////Sven's//Coding/ Date: 02-12-2022 11:28 ////////////
+// set back to account login:
+// change in backend, password 0000
+// remove justCV ? "Receive my CV" :
+/////////////////////////////////////////gnidoC//s'nevS////////////////////////////////
+
 // const navItems = [
 //   "Home",
 //   "Live video demo and device control",
@@ -41,7 +48,7 @@ export default function DrawerAppBar(props) {
     "about this project",
     "Showroom",
     "Contact",
-    loggedIn ? "Logout" : "Login or create a user",
+    justCV ? "Receive my CV" : loggedIn ? "Logout" : "Login or create a user",
   ]);
 
   useEffect(() => {
@@ -52,7 +59,7 @@ export default function DrawerAppBar(props) {
       "about this project",
       "Showroom",
       "Contact",
-      loggedIn ? "Logout" : "Login or create a user",
+      justCV ? "Receive my CV" : loggedIn ? "Logout" : "Login or create a user",
     ]);
 
     if (loggedIn) navigate("/BasicController");

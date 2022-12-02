@@ -226,17 +226,22 @@ const CreateMapping = () => {
   const deleteMap = () => {
     if (activeMap.includes(demo)) {
       window.alert(
-        "Cant delete Demo events, your are limited to brightness and color change, feel free to create your own event, ofcourse you can delete it afterwards"
+        "Hi there this is a demo Event, created with much love, feel free to make your own event, and afterwards you can ofcourse delete it"
       );
     } else {
-      setMarkers([]);
-      GraphQLHandler("id", "lat", "lng", "delete", activeMap);
-      let temp;
-      temp = filteredEventList.filter((e) => {
-        return e.name !== activeMap;
-      });
-      setFilteredEventList(temp);
-      setActiveMap("(Select)");
+      let confirmAction = window.confirm(
+        `Are you sure you wish to delete ${activeMap} ?`
+      );
+      if (confirmAction) {
+        setMarkers([]);
+        GraphQLHandler("id", "lat", "lng", "delete", activeMap);
+        let temp;
+        temp = filteredEventList.filter((e) => {
+          return e.name !== activeMap;
+        });
+        setFilteredEventList(temp);
+        setActiveMap("AlexanderPlatz Demo");
+      }
     }
   };
 
@@ -385,6 +390,12 @@ const CreateMapping = () => {
             label="New map name:"
             value={textValue}
             onChange={inputText}
+            onKeyPress={(ev) => {
+              if (ev.key === "Enter") {
+                createNewMap();
+                ev.preventDefault();
+              }
+            }}
           />
           <Button onClick={() => createNewMap()}>Add new map</Button>
           <div>
@@ -427,6 +438,12 @@ const CreateMapping = () => {
               label="Search"
               value={searchInput}
               onChange={searchText}
+              onKeyPress={(ev) => {
+                if (ev.key === "Enter") {
+                  createNewMap();
+                  ev.preventDefault();
+                }
+              }}
             />
             <Button onClick={() => searchMap()}>Search</Button>
           </div>

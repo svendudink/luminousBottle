@@ -44,8 +44,8 @@ const BasicController = () => {
   const [bulbColours, setbulbColours] = useState("1");
   const [mapping, setMapping] = useState(`AlexanderPlatz Demo`);
   const [liveVideo, setLiveVideo] = useState("");
-  const [eventsDisabled, setEventsDisabled] = useState(false);
-  const [lightDisabled, setLightDisabled] = useState(true);
+  const [eventsDisabled, setEventsDisabled] = useState(true);
+  const [lightDisabled, setLightDisabled] = useState(false);
   const [currentBrightness, setCurrentBrightness] = useState(100);
 
   /////////////////////////////////////Sven's//Coding/ Date: 17-10-2022 15:33 ////////////
@@ -120,9 +120,14 @@ const BasicController = () => {
   /////////////////////////////////////////gnidoC//s'nevS////////////////////////////////
 
   const directControl = (e) => {
-    if (e.target.checked) {
+    console.log(e.target.id);
+    if (
+      (e.target.checked && e.target.id === "direct") ||
+      (!e.target.checked && e.target.id === "event")
+    ) {
       console.log("checked");
       setEventsDisabled(true);
+      setLightDisabled(false);
 
       GraphQLHandler(
         0,
@@ -135,8 +140,9 @@ const BasicController = () => {
         "enableDirectControl"
       );
     } else {
-      setLightDisabled(true);
+      console.log("does this wok ?");
       setEventsDisabled(false);
+      setLightDisabled(true);
       GraphQLHandler(
         0,
         "center.lat",
@@ -257,7 +263,13 @@ const BasicController = () => {
                 : "direct control is enabled, switch off to use the event build mode"}
             </div>
           }
-          {<Switch onChange={directControl} />}
+          {
+            <Switch
+              id={"direct"}
+              checked={eventsDisabled}
+              onChange={directControl}
+            />
+          }
         </div>
 
         <div style={{ paddingTop: "10px" }}>
@@ -332,6 +344,22 @@ const BasicController = () => {
             story="eventControl"
             size={{ height: "190px", width: "650px" }}
           />
+        </div>
+        <div>
+          {
+            <div>
+              {!lightDisabled
+                ? "Enable Pre loaded events, loading time is around 30 seconds"
+                : "Pre loaded events is Enabled click on start event to load an event, loading time is around 30 seconds, Disable and Enable Direct Events"}
+            </div>
+          }
+          {
+            <Switch
+              id={"event"}
+              checked={!eventsDisabled}
+              onChange={directControl}
+            />
+          }
         </div>
         <br />
         <FormControl

@@ -15,7 +15,7 @@ const LoginCreateUser = () => {
     messages,
   } = useContext(UserContext);
 
-  const [checkBox, setCheckBox] = useState(true);
+  const [checkBox, setCheckBox] = useState(false);
 
   console.log(userData.current);
   console.log(errorMessages);
@@ -55,7 +55,7 @@ const LoginCreateUser = () => {
 
   return (
     <div className="tenKField">
-      {/* <div className="registered">
+      <div className="registered">
         Allready registered ? login here:{" "}
         <div>
           <TextField
@@ -84,11 +84,10 @@ const LoginCreateUser = () => {
             errorMessages === "user not found" ||
             errorMessages}
         </h5>
-      </div> */}
+      </div>
       <div className="notRegistered">
-        Welcome, <br />
-        fill in your data to receive my CV:
-        <br /> <br />
+        As a registered user, you can run your own events and view your events
+        over livestream
         <TextField
           required
           id="emailAdress"
@@ -97,7 +96,7 @@ const LoginCreateUser = () => {
           value={text.emailAdress ? text.emailAdress : ""}
         />
         <br /> <br />
-        {/* <TextField
+        <TextField
           required
           id="password"
           label="password"
@@ -105,13 +104,19 @@ const LoginCreateUser = () => {
           autoComplete="current-password"
           value={text.password ? text.password : ""}
           onChange={textInputHandler}
-        /> 
+        />
         <br />
-        <br />*/}
+        Are you a recruiter and would you like to receive my CV ?
+        <Checkbox
+          id={"recruiter"}
+          onClick={checkBoxHandler}
+          value={checkBox.recruiter ? checkBox.recruiter : false}
+        />
+        <br />
         <div>
           <TextField
             required
-            disabled={false}
+            disabled={!checkBox.recruiter}
             id="companyName"
             label="Company name"
             value={text.companyName ? text.companyName : ""}
@@ -119,7 +124,7 @@ const LoginCreateUser = () => {
           />{" "}
           <br /> <br />
           {/* <TextField
-            disabled={false}
+            disabled={!checkBox.recruiter}
             id="aboutCompany"
             label="Company Website"
             value={text.aboutCompany ? text.aboutCompany : ""}
@@ -127,23 +132,23 @@ const LoginCreateUser = () => {
           /> 
           <br /> <br />*/}
           <TextField
-            required
-            disabled={false}
-            id="yourName"
-            label="Your name"
-            value={text.yourName ? text.yourName : ""}
-            onChange={textInputHandler}
-          />{" "}
-          <br /> <br />
-          <TextField
-            disabled={false}
+            disabled={!checkBox.recruiter}
             id="phoneNumber"
             label="Phone Number"
             value={text.phoneNumber ? text.phoneNumber : ""}
             onChange={textInputHandler}
           />
+          <br /> <br />
+          <TextField
+            required
+            disabled={!checkBox.recruiter}
+            id="yourName"
+            label="Your name"
+            value={text.yourName ? text.yourName : ""}
+            onChange={textInputHandler}
+          />
         </div>
-        <Button onClick={sendFormHandler}>Send</Button>
+        <Button onClick={sendFormHandler}>Register</Button>
         <h5 style={{ color: "red" }}>
           {errorMessages === "user exist already!" ||
           errorMessages === "invalid input"
@@ -151,7 +156,7 @@ const LoginCreateUser = () => {
             : ""}
         </h5>
         <h5 style={{ color: "green" }}>
-          {messages ? "Your CV request has been received, " : ""}
+          {messages ? "succesfully created your account" : ""}
         </h5>
       </div>
     </div>

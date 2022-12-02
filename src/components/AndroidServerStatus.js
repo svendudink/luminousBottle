@@ -40,7 +40,7 @@ const AndroidServerStatus = () => {
       <h1>Server updates</h1>
       <div className="textarea">
         {renderList}
-        <div ref={bottomRef} />
+        {/* <div ref={bottomRef} /> */}
       </div>
     </div>
   );
