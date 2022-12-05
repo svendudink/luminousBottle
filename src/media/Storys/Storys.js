@@ -12,7 +12,7 @@ const Storys = (props) => {
     return (
       <div style={{ color: textColor }}>
         Bottle Luminous has a total of 132 Bottles, all connected over a
-        Blueooth MESH network
+        Blueooth MESH network.
       </div>
     );
   }
