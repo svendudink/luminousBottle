@@ -22,6 +22,7 @@ import { Showroom } from "./views/Showroom";
 import { IoContextProvider } from "./components/context/IoConnectContext";
 import { UserContext } from "./components/context/UserContext";
 import LoginCreateUser from "./views/LoginCreateUser.js";
+import RecruiterVideo from "./views/RecruiterVideo.js";
 import { getToken } from "./Helpers/getToken";
 
 /////////////////////////////////////Sven's//Coding/ Date: 17-10-2022 15:27 ////////////
@@ -51,6 +52,7 @@ function BackgroundLayer() {
   const { setLoggedIn } = useContext(UserContext);
 
   const [user, setUser] = useState(false);
+  const [id, setId] = useState("");
 
   const checkIfUserIsLoggedIn = () => {
     const token = getToken();
@@ -201,6 +203,10 @@ function BackgroundLayer() {
           <Route path="/Showroom" element={<Showroom />} />
           <Route path="/Contact" element={<Contact />} />
           <Route path="/LoginCreateUser" element={<LoginCreateUser />} />
+          <Route
+            path="/recruiterVideo/:id/:token"
+            element={<RecruiterVideo id={id} />}
+          />
         </Routes>
       </div>
     </BrowserRouter>
@@ -208,3 +214,5 @@ function BackgroundLayer() {
 }
 
 export default BackgroundLayer;
+
+// path={`/recruiterVideo/${setId}`}

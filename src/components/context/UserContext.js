@@ -9,6 +9,18 @@ export const UserContextProvider = (props) => {
   const [messages, setMessages] = useState("");
   const [errorMessages, setErrorMessages] = useState("");
   const [loggedIn, setLoggedIn] = useState(false);
+  const [personalInfo, setPersonalInfo] = useState({
+    emailAdress: "",
+    password: "",
+    aboutCompany: "",
+    companyName: "",
+    phoneNumber: "",
+    yourName: "",
+    loginEmailAdress: "",
+    loginPassword: "",
+    id: "",
+    token: "",
+  });
   const [text, setText] = useState({
     emailAdress: "",
     password: "",
@@ -18,6 +30,8 @@ export const UserContextProvider = (props) => {
     yourName: "",
     loginEmailAdress: "",
     loginPassword: "",
+    id: "",
+    token: "",
   });
 
   const userData = useRef({});
@@ -46,6 +60,7 @@ export const UserContextProvider = (props) => {
     _id
     emailAdress
     password
+    token
   }}
 `,
       `{
@@ -55,8 +70,15 @@ export const UserContextProvider = (props) => {
         }
       }
 `,
+      `{
+        idLogin(id: "${personalData.id}", token: "${personalData.token}"){
+          yourName
+          companyName
+        }
+      }
+`,
     ];
-    console.log(requestList[request]);
+    console.log("view", requestList[request]);
     const graphglQuery = {
       query: requestList[request],
     };
@@ -93,9 +115,9 @@ export const UserContextProvider = (props) => {
       console.log(errorMessages);
     }
 
-    if (userData.current.data.login.token) {
+    if (request === 1 && userData.current.data.login.token) {
       localStorage.setItem("token", userData.current.data.login.token);
-
+      console.log("token");
       setLoggedIn(true);
       setErrorMessages("");
       setText({
@@ -107,6 +129,12 @@ export const UserContextProvider = (props) => {
         yourName: "",
         loginEmailAdress: "",
         loginPassword: "",
+      });
+    }
+    if (request === 2 && userData.current.data.idLogin.yourName) {
+      setPersonalInfo({
+        yourName: userData.current.data.idLogin.yourName,
+        companyName: userData.current.data.idLogin.companyName,
       });
     }
   };
@@ -124,6 +152,8 @@ export const UserContextProvider = (props) => {
         setText,
         messages,
         setMessages,
+        setPersonalInfo,
+        personalInfo,
       }}
     >
       {props.children}
