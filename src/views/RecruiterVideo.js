@@ -45,7 +45,8 @@ const RecruiterVideo = (props) => {
     <div>
       <p>
         {" "}
-        Welcome: {personalInfo.yourName}, to your personalized recruiter space
+        Welcome: {personalInfo.yourName}, to your personalized recruiter space,
+        in the next days you will find here my personalized Video resume
       </p>
     </div>
   );
